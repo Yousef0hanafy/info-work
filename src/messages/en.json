@@ -1,0 +1,178 @@
+{
+  "nav": {
+    "services": "Services",
+    "about": "About",
+    "projects": "Projects",
+    "testimonials": "Testimonials",
+    "clients": "Clients",
+    "contact": "Contact",
+    "getStarted": "Start a Project",
+    "language": "العربية"
+  },
+  "hero": {
+    "badge": "15+ Years of Engineering Excellence",
+    "title": "Engineering Water Intelligence",
+    "subtitle": "From design to commissioning — we deliver turnkey water treatment, electromechanical, and civil infrastructure projects across Egypt and the MENA region.",
+    "cta1": "Request a Consultation",
+    "cta2": "View Our Projects"
+  },
+  "stats": {
+    "projects": "200+",
+    "projectsLabel": "Projects Delivered",
+    "years": "15+",
+    "yearsLabel": "Years of Experience",
+    "clients": "50+",
+    "clientsLabel": "Trusted Clients",
+    "countries": "3",
+    "countriesLabel": "Countries Served"
+  },
+  "services": {
+    "label": "WHAT WE ENGINEER",
+    "title": "Comprehensive Engineering Solutions",
+    "subtitle": "We deliver turnkey solutions across three interconnected pillars — water infrastructure, electromechanical systems, and civil construction. One contract, one team, zero coordination headaches.",
+    "waterTreatment": {
+      "title": "Water Treatment Plants",
+      "description": "Complete design, construction, and commissioning of potable water treatment systems — filtration, desalination, disinfection, and distribution networks."
+    },
+    "sewageTreatment": {
+      "title": "Wastewater & Sewage Treatment",
+      "description": "Industrial and municipal sewage treatment plants — biological treatment, membrane systems, and full effluent compliance."
+    },
+    "hvac": {
+      "title": "HVAC Systems",
+      "description": "Heating, ventilation, and air conditioning engineering for commercial, industrial, and residential buildings."
+    },
+    "fireFighting": {
+      "title": "Fire Fighting Systems",
+      "description": "Complete fire suppression — sprinklers, wet/dry risers, FM200, hose reels, and integrated fire alarm systems."
+    },
+    "electromechanical": {
+      "title": "Electromechanical Works",
+      "description": "Full-scope electromechanical contracting — electrical panels, power distribution, control systems, and instrumentation."
+    },
+    "civil": {
+      "title": "Civil & Infrastructure",
+      "description": "Excavation, earthworks, concrete construction, road works, and structural engineering for water infrastructure."
+    },
+    "equipment": {
+      "title": "Equipment Supply",
+      "description": "Procurement and supply of UV filters, pumps, blowers, membranes, pipes, air diffusers, and electrical panels."
+    },
+    "design": {
+      "title": "Design & Consultation",
+      "description": "2D/3D engineering drawings, cost estimation, feasibility studies, and technical consultation."
+    },
+    "learnMore": "Learn More"
+  },
+  "chairman": {
+    "label": "LEADERSHIP",
+    "title": "Vision That Builds Reality",
+    "quote": "Many say that many parts bring a company together — but we believe the greatest strength is its people who dare to dream and do things uniquely different. We believe we can make the dream a reality.",
+    "badge1": "15+ Years in Water Engineering",
+    "badge2": "200+ Projects Delivered",
+    "badge3": "Egypt & MENA Coverage",
+    "signature": "Eng. Houssien Derbaze",
+    "role": "Chairman"
+  },
+  "projects": {
+    "label": "OUR PORTFOLIO",
+    "title": "Projects That Speak for Themselves",
+    "subtitle": "Every project is a testament to our engineering precision and commitment to delivery. Browse our track record across water treatment, electromechanical, and civil infrastructure.",
+    "filterAll": "All Projects",
+    "filterWater": "Water Treatment",
+    "filterSewage": "Sewage Treatment",
+    "filterHvac": "HVAC",
+    "filterFireFighting": "Fire Fighting",
+    "filterCivil": "Civil Works",
+    "filterElectromechanical": "Electromechanical",
+    "viewDetails": "View Details",
+    "capacity": "Capacity",
+    "duration": "Duration",
+    "location": "Location",
+    "status": "Status",
+    "completed": "Completed",
+    "inProgress": "In Progress"
+  },
+  "testimonials": {
+    "label": "CLIENT TESTIMONIALS",
+    "title": "Trusted by Industry Leaders",
+    "subtitle": "Don't take our word for it — hear from the engineers, contractors, and organizations who have experienced the Infeworks difference."
+  },
+  "clients": {
+    "label": "OUR PARTNERS",
+    "title": "Trusted By Industry Leaders",
+    "subtitleClients": "We've delivered engineering excellence for leading organizations across Egypt and the MENA region.",
+    "subtitlePartners": "Our technology partnerships ensure we deliver world-class equipment and systems for every project."
+  },
+  "contact": {
+    "label": "GET IN TOUCH",
+    "title": "Ready to Start Your Project?",
+    "subtitle": "Tell us about your engineering challenge. Our team typically responds within 24 hours. For urgent inquiries, call us directly.",
+    "form": {
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "company": "Company / Organization",
+      "serviceInterest": "Service Interest",
+      "selectService": "Select a service...",
+      "projectType": "Project Type",
+      "selectProjectType": "Select project type...",
+      "budgetRange": "Estimated Budget Range",
+      "selectBudget": "Select budget range...",
+      "timeline": "Project Timeline",
+      "selectTimeline": "Select timeline...",
+      "message": "Tell us about your project",
+      "messagePlaceholder": "Describe your engineering challenge, project scope, or any specific requirements...",
+      "upload": "Attach Files (PDF, DOC, DWG, JPG — max 10MB)",
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": "Thank you! Your message has been received. We typically respond within 24 hours.",
+      "error": "Something went wrong. Please try again or contact us directly by phone."
+    },
+    "info": {
+      "address": "313 Zahraa, Naser City, Cairo, Egypt",
+      "phone1": "+20 100 624 9420",
+      "phone2": "+20 111 866 0042",
+      "email": "info@infeworks.com",
+      "addressLabel": "Office Address",
+      "phoneLabel": "Phone",
+      "emailLabel": "Email",
+      "urgentNote": "For urgent inquiries, call us directly."
+    },
+    "budgetOptions": {
+      "under50k": "Under $50K",
+      "50k_200k": "$50K – $200K",
+      "200k_500k": "$200K – $500K",
+      "500k_1m": "$500K – $1M",
+      "over1m": "Over $1M",
+      "notSure": "Not Sure Yet"
+    },
+    "timelineOptions": {
+      "immediate": "Immediate (ASAP)",
+      "1to3": "1 – 3 months",
+      "3to6": "3 – 6 months",
+      "6to12": "6 – 12 months",
+      "planning": "Planning Phase"
+    },
+    "projectTypeOptions": {
+      "newConstruction": "New Construction",
+      "retrofit": "Expansion / Retrofit",
+      "maintenance": "Maintenance & Repair",
+      "feasibility": "Feasibility Study",
+      "other": "Other"
+    }
+  },
+  "footer": {
+    "description": "Engineering water intelligence — from design to commissioning. We deliver turnkey water treatment, electromechanical, and civil infrastructure across Egypt and the MENA region.",
+    "quickLinks": "Quick Links",
+    "serviceAreas": "Service Areas",
+    "contactInfo": "Contact Info",
+    "newsletter": "Stay Updated",
+    "newsletterPlaceholder": "Your email address",
+    "subscribe": "Subscribe",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© {year} Infeworks. All rights reserved."
+  },
+  "whatsapp": "Chat on WhatsApp"
+}
