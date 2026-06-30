@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infeworks Brand & Business Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 794px 1123px; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 794px; height: 1123px; background: #0d0d0c; }
+  .cover-page { position: relative; width: 794px; height: 1123px; background: #0d0d0c; }
+
+  /* Layer 1: Background Grid */
+  .cover-layer-1 {
+    position: absolute; inset: 0; overflow: hidden; z-index: 1;
+  }
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(226,226,223,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(226,226,223,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .glow-accent {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,190,88,0.08) 0%, transparent 70%);
+    top: 15%; right: 5%;
+  }
+
+  /* Layer 2: Structure */
+  .cover-layer-2 {
+    position: absolute; inset: 0; z-index: 2;
+  }
+  .anchor-line {
+    position: absolute;
+    left: 95px; top: 112px; bottom: 112px;
+    width: 6px;
+    background: linear-gradient(180deg, #e0be58 0%, #554e39 100%);
+    border-radius: 3px;
+  }
+  .divider-line {
+    position: absolute;
+    left: 140px; top: 780px; right: 60px;
+    height: 1px;
+    background: rgba(226,226,223,0.12);
+  }
+
+  /* Layer 3: Content */
+  .cover-layer-3 {
+    position: absolute; inset: 0; z-index: 3;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .kicker {
+    position: absolute;
+    left: 140px; top: 160px;
+    font-size: 13px; font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(226,226,223,0.5);
+    line-height: 1.4;
+  }
+  .hero-title {
+    position: absolute;
+    left: 140px; top: 280px;
+    max-width: 560px;
+    font-size: 52px; font-weight: 700;
+    color: #e2e2df;
+    line-height: 1.12;
+    letter-spacing: -1px;
+  }
+  .hero-title .accent { color: #e0be58; }
+  .summary-block {
+    position: absolute;
+    left: 140px; top: 500px;
+    max-width: 520px;
+    font-size: 15px; font-weight: 300;
+    color: rgba(226,226,223,0.7);
+    line-height: 1.7;
+  }
+  .meta-block {
+    position: absolute;
+    left: 140px; top: 800px;
+    font-size: 13px; font-weight: 400;
+    color: rgba(226,226,223,0.45);
+    line-height: 1.8;
+  }
+  .meta-block .label { color: #554e39; }
+  .footer-block {
+    position: absolute;
+    left: 140px; bottom: 60px;
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(226,226,223,0.3);
+  }
+
+  /* Pillar markers */
+  .pillar-indicators {
+    position: absolute;
+    right: 60px; top: 280px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .pillar-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #e0be58;
+    opacity: 0.4;
+  }
+  .pillar-dot.active { opacity: 1; }
+
+  /* Severity badge */
+  .severity-badge {
+    position: absolute;
+    left: 140px; top: 440px;
+    padding: 6px 16px;
+    border: 1px solid rgba(188,112,105,0.5);
+    border-radius: 4px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #bc7069;
+  }
+</style>
+</head>
+<body>
+<div class="cover-page">
+  <!-- Layer 1: Background -->
+  <div class="cover-layer-1">
+    <div class="grid-bg"></div>
+    <div class="glow-accent"></div>
+  </div>
+  <!-- Layer 2: Structure -->
+  <div class="cover-layer-2">
+    <div class="anchor-line"></div>
+    <div class="divider-line"></div>
+  </div>
+  <!-- Layer 3: Content -->
+  <div class="cover-layer-3">
+    <div class="kicker">Brand & Business Audit</div>
+    <div class="hero-title">
+      <span class="accent">Infeworks</span><br>
+      Identity Crisis
+    </div>
+    <div class="severity-badge">Critical Severity</div>
+    <div class="summary-block">
+      A brutal 4-pillar audit exposing the cognitive fracture between a tech-forward visual identity and a traditional Egyptian EPC engineering business, with an actionable transformation roadmap.
+    </div>
+    <div class="meta-block">
+      <span class="label">AUDITOR</span> Brand Strategy & CRO Analysis<br>
+      <span class="label">SCOPE</span> Visual Identity + Digital Presence + Conversion<br>
+      <span class="label">DATE</span> July 2026<br>
+      <span class="label">CLASSIFICATION</span> Founder Confidential
+    </div>
+    <div class="footer-block">infeworks.com</div>
+    <div class="pillar-indicators">
+      <div class="pillar-dot active"></div>
+      <div class="pillar-dot"></div>
+      <div class="pillar-dot"></div>
+      <div class="pillar-dot"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
