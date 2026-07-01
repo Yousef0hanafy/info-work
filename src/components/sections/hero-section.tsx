@@ -27,7 +27,7 @@ const fadeUp = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 }
 
@@ -39,7 +39,7 @@ const statVariants = {
     transition: {
       delay: 1.0 + i * 0.12,
       duration: 0.5,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
     },
   }),
 }
@@ -83,8 +83,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#0B1120' }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-dark"
     >
       {/* Background image with overlay */}
       <div className="absolute inset-0 overflow-hidden">
@@ -96,7 +95,7 @@ export function HeroSection() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B1120] via-[#0B1120]/70 to-[#0B1120]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/70 to-brand-dark" />
       </div>
 
       {/* Animated gradient mesh background */}
@@ -169,11 +168,6 @@ export function HeroSection() {
         initial="hidden"
         animate="visible"
       >
-        {/* Logo mark */}
-        <motion.div variants={fadeUp} className="mb-6">
-          <Image src="/logo.png" alt="Infeworks" width={56} height={56} className="rounded-2xl" priority />
-        </motion.div>
-
         {/* Badge */}
         <motion.div variants={fadeUp}>
           <span

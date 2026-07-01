@@ -45,10 +45,10 @@ const timelineKeys = [
 ] as const
 
 const inputClasses =
-  'w-full bg-brand-surface border border-brand-border rounded-xl h-11 px-4 text-white placeholder:text-muted-foreground focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/20 focus:outline-none transition-colors'
+  'w-full bg-card border border-border rounded-xl h-11 px-4 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors'
 
 const selectClasses =
-  'w-full bg-brand-surface border border-brand-border rounded-xl h-11 px-4 text-white focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/20 focus:outline-none transition-colors appearance-none cursor-pointer'
+  'w-full bg-card border border-border rounded-xl h-11 px-4 text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors appearance-none cursor-pointer'
 
 const labelClasses = 'text-sm font-medium text-muted-foreground mb-1.5 block'
 
@@ -57,6 +57,16 @@ const infoCards = [
   { key: 'phone', icon: Phone, labelKey: 'phoneLabel', valueKey: null },
   { key: 'email', icon: Mail, labelKey: 'emailLabel', valueKey: 'email' },
 ] as const
+
+function SelectArrow() {
+  return (
+    <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-4">
+      <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  )
+}
 
 export function ContactSection() {
   const t = useTranslations('contact')
@@ -87,7 +97,6 @@ export function ContactSection() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // Clear messages on change
     if (success) setSuccess(false)
     if (error) setError('')
   }
@@ -149,7 +158,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 bg-brand-dark">
+    <section id="contact" className="py-24 bg-muted">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <motion.div
@@ -159,10 +168,10 @@ export function ContactSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-brand-accent mb-4">
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-primary mb-4">
             {t('label')}
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             {t('title')}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
@@ -186,7 +195,7 @@ export function ContactSection() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-xl border border-brand-success/30 bg-brand-success/10 px-5 py-4 text-brand-success text-sm"
+                  className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-emerald-600 dark:text-emerald-400 text-sm"
                 >
                   {tForm('success')}
                 </motion.div>
@@ -195,7 +204,7 @@ export function ContactSection() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-xl border border-brand-error/30 bg-brand-error/10 px-5 py-4 text-brand-error text-sm"
+                  className="rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-4 text-red-600 dark:text-red-400 text-sm"
                 >
                   {error}
                 </motion.div>
@@ -205,7 +214,7 @@ export function ContactSection() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <Label htmlFor="fullName" className={labelClasses}>
-                    {tForm('fullName')} <span className="text-brand-error">*</span>
+                    {tForm('fullName')} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="fullName"
@@ -220,7 +229,7 @@ export function ContactSection() {
                 </div>
                 <div>
                   <Label htmlFor="email" className={labelClasses}>
-                    {tForm('email')} <span className="text-brand-error">*</span>
+                    {tForm('email')} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="email"
@@ -239,7 +248,7 @@ export function ContactSection() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <Label htmlFor="phone" className={labelClasses}>
-                    {tForm('phone')} <span className="text-brand-error">*</span>
+                    {tForm('phone')} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="phone"
@@ -271,7 +280,7 @@ export function ContactSection() {
               {/* Service Interest */}
               <div>
                 <Label htmlFor="serviceInterest" className={labelClasses}>
-                  {tForm('serviceInterest')} <span className="text-brand-error">*</span>
+                  {tForm('serviceInterest')} <span className="text-red-500">*</span>
                 </Label>
                 <div className="relative">
                   <select
@@ -282,30 +291,16 @@ export function ContactSection() {
                     onChange={handleChange}
                     className={selectClasses}
                   >
-                    <option value="" className="bg-brand-surface text-muted-foreground">
+                    <option value="" className="bg-card text-muted-foreground">
                       {tForm('selectService')}
                     </option>
                     {serviceKeys.map((key) => (
-                      <option key={key} value={key} className="bg-brand-surface text-white">
+                      <option key={key} value={key} className="bg-card text-foreground">
                         {tServices(`${key}.title`)}
                       </option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-4">
-                    <svg
-                      className="h-4 w-4 text-muted-foreground"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
+                  <SelectArrow />
                 </div>
               </div>
 
@@ -323,30 +318,16 @@ export function ContactSection() {
                       onChange={handleChange}
                       className={selectClasses}
                     >
-                      <option value="" className="bg-brand-surface text-muted-foreground">
+                      <option value="" className="bg-card text-muted-foreground">
                         {tForm('selectProjectType')}
                       </option>
                       {projectTypeKeys.map((key) => (
-                        <option key={key} value={key} className="bg-brand-surface text-white">
+                        <option key={key} value={key} className="bg-card text-foreground">
                           {tProjectType(key)}
                         </option>
                       ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-4">
-                      <svg
-                        className="h-4 w-4 text-muted-foreground"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </div>
+                    <SelectArrow />
                   </div>
                 </div>
                 <div>
@@ -361,30 +342,16 @@ export function ContactSection() {
                       onChange={handleChange}
                       className={selectClasses}
                     >
-                      <option value="" className="bg-brand-surface text-muted-foreground">
+                      <option value="" className="bg-card text-muted-foreground">
                         {tForm('selectBudget')}
                       </option>
                       {budgetKeys.map((key) => (
-                        <option key={key} value={key} className="bg-brand-surface text-white">
+                        <option key={key} value={key} className="bg-card text-foreground">
                           {tBudget(key)}
                         </option>
                       ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-4">
-                      <svg
-                        className="h-4 w-4 text-muted-foreground"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </div>
+                    <SelectArrow />
                   </div>
                 </div>
               </div>
@@ -402,37 +369,23 @@ export function ContactSection() {
                     onChange={handleChange}
                     className={selectClasses}
                   >
-                    <option value="" className="bg-brand-surface text-muted-foreground">
+                    <option value="" className="bg-card text-muted-foreground">
                       {tForm('selectTimeline')}
                     </option>
                     {timelineKeys.map((key) => (
-                      <option key={key} value={key} className="bg-brand-surface text-white">
+                      <option key={key} value={key} className="bg-card text-foreground">
                         {tTimeline(key)}
                       </option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-4">
-                    <svg
-                      className="h-4 w-4 text-muted-foreground"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
+                  <SelectArrow />
                 </div>
               </div>
 
               {/* Message */}
               <div>
                 <Label htmlFor="message" className={labelClasses}>
-                  {tForm('message')} <span className="text-brand-error">*</span>
+                  {tForm('message')} <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                   id="message"
@@ -451,7 +404,7 @@ export function ContactSection() {
                 type="submit"
                 disabled={loading}
                 whileTap={{ scale: 0.98 }}
-                className="w-full h-12 bg-brand-accent hover:bg-brand-accent/90 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full h-12 bg-primary hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed text-primary-foreground rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -476,7 +429,6 @@ export function ContactSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-2 flex flex-col gap-4"
           >
-            {/* Address Card */}
             {infoCards.map((card, idx) => {
               const Icon = card.icon
               return (
@@ -486,11 +438,11 @@ export function ContactSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: idx * 0.1 }}
-                  className="bg-brand-surface border border-brand-border rounded-xl p-5"
+                  className="bg-card border border-border rounded-xl p-5"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-brand-accent/10 flex items-center justify-center">
-                      <Icon className="h-5 w-5 text-brand-accent" />
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
@@ -498,15 +450,15 @@ export function ContactSection() {
                       </p>
                       {card.key === 'phone' ? (
                         <div className="flex flex-col gap-0.5">
-                          <span className="text-white font-medium">
+                          <span className="text-foreground font-medium">
                             {tInfo('phone1')}
                           </span>
-                          <span className="text-white font-medium">
+                          <span className="text-foreground font-medium">
                             {tInfo('phone2')}
                           </span>
                         </div>
                       ) : (
-                        <p className="text-white font-medium">
+                        <p className="text-foreground font-medium">
                           {tInfo(card.valueKey!)}
                         </p>
                       )}
@@ -522,13 +474,13 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="bg-brand-warning/5 border border-brand-warning/20 rounded-xl p-5"
+              className="bg-amber-500/5 border border-amber-500/20 rounded-xl p-5"
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-brand-warning/10 flex items-center justify-center">
-                  <Clock className="h-5 w-5 text-brand-warning" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                  <Clock className="h-5 w-5 text-amber-500" />
                 </div>
-                <p className="text-brand-warning font-medium text-sm pt-2">
+                <p className="text-amber-600 dark:text-amber-400 font-medium text-sm pt-2">
                   {tInfo('urgentNote')}
                 </p>
               </div>

@@ -40,7 +40,7 @@ const cardVariants = {
     transition: {
       delay: i * 0.06,
       duration: 0.5,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
     },
   }),
 }
@@ -53,8 +53,7 @@ export function ServicesSection() {
   return (
     <section
       id="services"
-      className="py-20 md:py-28 relative overflow-hidden"
-      style={{ backgroundColor: '#0F172A' }}
+      className="py-20 md:py-28 relative overflow-hidden bg-background"
     >
       {/* Subtle gradient glow */}
       <div
@@ -78,8 +77,7 @@ export function ServicesSection() {
           }}
         >
           <motion.span
-            className="inline-block text-xs font-bold tracking-[3px] uppercase"
-            style={{ color: '#3B82F6' }}
+            className="inline-block text-xs font-bold tracking-[3px] uppercase text-primary"
             variants={{
               hidden: { opacity: 0, y: 16 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
@@ -89,7 +87,7 @@ export function ServicesSection() {
           </motion.span>
 
           <motion.h2
-            className="mt-4 text-3xl md:text-4xl font-bold text-white"
+            className="mt-4 text-3xl md:text-4xl font-bold text-foreground"
             variants={{
               hidden: { opacity: 0, y: 16 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
@@ -99,13 +97,7 @@ export function ServicesSection() {
           </motion.h2>
 
           <motion.div
-            className="mx-auto mt-5"
-            style={{
-              width: '48px',
-              height: '3px',
-              backgroundColor: '#3B82F6',
-              borderRadius: '2px',
-            }}
+            className="mx-auto mt-5 h-[3px] w-12 rounded-full bg-primary"
             variants={{
               hidden: { opacity: 0, scaleX: 0 },
               visible: { opacity: 1, scaleX: 1, transition: { duration: 0.4, ease: easeOut } },
@@ -113,8 +105,7 @@ export function ServicesSection() {
           />
 
           <motion.p
-            className="mt-6 text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
-            style={{ color: '#94A3B8' }}
+            className="mt-6 text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-muted-foreground"
             variants={{
               hidden: { opacity: 0, y: 16 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
@@ -131,11 +122,7 @@ export function ServicesSection() {
             return (
               <motion.article
                 key={service.slug}
-                className="group relative rounded-xl p-6 transition-all duration-300 cursor-default"
-                style={{
-                  backgroundColor: '#1A2332',
-                  border: '1px solid #2D3B4F',
-                }}
+                className="group relative rounded-xl p-6 border border-border bg-card transition-all duration-300 cursor-default"
                 custom={i}
                 variants={cardVariants}
                 initial="hidden"
@@ -158,38 +145,23 @@ export function ServicesSection() {
 
                 {/* Icon */}
                 <div className="relative">
-                  <div
-                    className="flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 group-hover:scale-110"
-                    style={{
-                      backgroundColor: 'rgba(59,130,246,0.08)',
-                      border: '1px solid rgba(59,130,246,0.1)',
-                    }}
-                  >
-                    <Icon
-                      className="w-6 h-6 transition-colors duration-300"
-                      style={{ color: '#60A5FA' }}
-                    />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 group-hover:scale-110 bg-primary/10 border border-primary/10">
+                    <Icon className="w-6 h-6 text-primary transition-colors duration-300" />
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="relative mt-5 text-lg font-semibold text-white">
+                <h3 className="relative mt-5 text-lg font-semibold text-foreground">
                   {t(`${service.key}.title`)}
                 </h3>
 
                 {/* Description */}
-                <p
-                  className="relative mt-2.5 text-sm leading-relaxed"
-                  style={{ color: '#64748B' }}
-                >
+                <p className="relative mt-2.5 text-sm leading-relaxed text-muted-foreground">
                   {t(`${service.key}.description`)}
                 </p>
 
                 {/* Learn More */}
-                <div
-                  className="relative mt-5 flex items-center gap-1.5 text-sm font-medium transition-all duration-300 group-hover:gap-2.5"
-                  style={{ color: '#60A5FA' }}
-                >
+                <div className="relative mt-5 flex items-center gap-1.5 text-sm font-medium text-primary transition-all duration-300 group-hover:gap-2.5">
                   {t('learnMore')}
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>

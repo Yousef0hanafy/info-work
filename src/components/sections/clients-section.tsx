@@ -14,7 +14,7 @@ import {
   Hammer,
   Factory,
   Trophy,
-  } from 'lucide-react'
+} from 'lucide-react'
 import { type LucideIcon } from 'lucide-react'
 
 const CLIENTS: { name: string; nameAr: string; icon: LucideIcon }[] = [
@@ -41,7 +41,7 @@ export function ClientsSection() {
   const t = useTranslations('clients')
 
   return (
-    <section id="clients" className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: '#0F172A' }}>
+    <section id="clients" className="py-20 md:py-28 relative overflow-hidden bg-card">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center md:mb-16">
@@ -50,7 +50,7 @@ export function ClientsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: easeOut }}
-            className="mb-4 inline-block text-xs font-bold tracking-[3px] uppercase text-brand-glow"
+            className="mb-4 inline-block text-xs font-bold tracking-[3px] uppercase text-primary"
           >
             {t('label')}
           </motion.span>
@@ -59,7 +59,7 @@ export function ClientsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1, ease: easeOut }}
-            className="mb-4 text-3xl md:text-4xl font-bold text-white"
+            className="mb-4 text-3xl md:text-4xl font-bold text-foreground"
           >
             {t('title')}
           </motion.h2>
@@ -68,7 +68,7 @@ export function ClientsSection() {
             whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.15, ease: easeOut }}
-            className="mx-auto h-[3px] w-12 rounded-full bg-brand-accent"
+            className="mx-auto h-[3px] w-12 rounded-full bg-primary"
           />
         </div>
 
@@ -79,7 +79,7 @@ export function ClientsSection() {
           viewport={{ once: true, margin: '-40px' }}
           className="mb-16"
         >
-          <p className="mb-8 text-center text-sm font-medium text-slate-400">
+          <p className="mb-8 text-center text-sm font-medium text-muted-foreground">
             {t('subtitleClients')}
           </p>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-4">
@@ -92,10 +92,10 @@ export function ClientsSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05, duration: 0.4, ease: easeOut }}
-                  className="group flex h-20 items-center justify-center gap-3 rounded-xl border border-brand-border bg-brand-surface/50 p-4 transition-all duration-300 hover:border-brand-accent/30 hover:bg-brand-surface"
+                  className="group flex h-20 items-center justify-center gap-3 rounded-xl border border-border bg-background/50 p-4 transition-all duration-300 hover:border-primary/30 hover:bg-card"
                 >
-                  <Icon className="h-5 w-5 text-slate-600 transition-colors duration-300 group-hover:text-brand-glow" />
-                  <span className="text-xs font-semibold text-slate-500 transition-colors duration-300 group-hover:text-slate-200 text-center leading-tight">
+                  <Icon className="h-5 w-5 text-muted-foreground transition-colors duration-300 group-hover:text-primary" />
+                  <span className="text-xs font-semibold text-muted-foreground transition-colors duration-300 group-hover:text-foreground text-center leading-tight">
                     {client.name}
                   </span>
                 </motion.div>
@@ -110,7 +110,7 @@ export function ClientsSection() {
           whileInView="visible"
           viewport={{ once: true, margin: '-40px' }}
         >
-          <p className="mb-8 text-center text-sm font-medium text-slate-400">
+          <p className="mb-8 text-center text-sm font-medium text-muted-foreground">
             {t('subtitlePartners')}
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -123,17 +123,14 @@ export function ClientsSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.4, ease: easeOut }}
-                  className="group flex flex-col items-center gap-3 rounded-xl border border-brand-border bg-brand-surface/50 p-6 text-center transition-all duration-300 hover:border-brand-accent/30 hover:bg-brand-surface"
+                  className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-background/50 p-6 text-center transition-all duration-300 hover:border-primary/30 hover:bg-card"
                 >
-                  <div
-                    className="flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
-                    style={{ backgroundColor: 'rgba(59,130,246,0.08)' }}
-                  >
-                    <Icon className="h-6 w-6 text-brand-glow" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110 bg-primary/10">
+                    <Icon className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-white">{partner.caption}</p>
-                    <p className="mt-1 text-xs font-medium text-brand-glow">{partner.description}</p>
+                    <p className="text-sm font-semibold text-foreground">{partner.caption}</p>
+                    <p className="mt-1 text-xs font-medium text-primary">{partner.description}</p>
                   </div>
                 </motion.div>
               )

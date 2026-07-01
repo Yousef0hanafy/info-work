@@ -2,10 +2,11 @@
 
 import { useTranslations } from '@/lib/i18n-client'
 import Image from 'next/image'
-import { Phone, Mail, MapPin, Send, Globe } from 'lucide-react'
+import { Phone, Mail, MapPin, Send } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useState } from 'react'
 
 const QUICK_LINKS = [
   { key: 'services', href: '#services' },
@@ -21,6 +22,8 @@ export function Footer() {
   const tNav = useTranslations('nav')
   const tContact = useTranslations('contact')
   const currentYear = new Date().getFullYear()
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
@@ -32,8 +35,17 @@ export function Footer() {
     }
   }
 
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (email.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setSubscribed(true)
+      setEmail('')
+      setTimeout(() => setSubscribed(false), 4000)
+    }
+  }
+
   return (
-    <footer className="mt-auto border-t border-border/50" style={{ backgroundColor: '#0B1120' }}>
+    <footer className="mt-auto border-t border-border/50 bg-background">
       {/* Main Footer Content */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
@@ -56,7 +68,7 @@ export function Footer() {
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 aria-label="Facebook"
               >
-                <Globe className="h-4 w-4" />
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               </a>
               <a
                 href="https://linkedin.com/company/infeworks"
@@ -65,7 +77,7 @@ export function Footer() {
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 aria-label="LinkedIn"
               >
-                <Globe className="h-4 w-4" />
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </a>
             </div>
           </div>
@@ -132,21 +144,27 @@ export function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-10 rounded-xl border border-border/50 p-6" style={{ backgroundColor: 'rgba(26,35,50,0.5)' }}>
+        <div className="mt-10 rounded-xl border border-border p-6 bg-muted/50">
           <h3 className="mb-2 text-sm font-semibold text-foreground">{t('newsletter')}</h3>
           <p className="mb-4 text-xs text-muted-foreground">{t('newsletterPlaceholder')}</p>
-          <div className="flex gap-2">
+          <form onSubmit={handleSubscribe} className="flex gap-2">
             <Input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder={t('newsletterPlaceholder')}
-              className="h-9 flex-1 bg-background text-sm border-border"
-              readOnly
+              className="h-9 flex-1 bg-card text-sm border-border"
+              required
             />
-            <Button size="default" className="h-9 gap-2 px-4 text-sm">
-              <Send className="h-3.5 w-3.5" />
-              {t('subscribe')}
+            <Button type="submit" size="default" className="h-9 gap-2 px-4 text-sm" disabled={subscribed}>
+              {subscribed ? (
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              ) : (
+                <Send className="h-3.5 w-3.5" />
+              )}
+              {subscribed ? '✓' : t('subscribe')}
             </Button>
-          </div>
+          </form>
         </div>
       </div>
 

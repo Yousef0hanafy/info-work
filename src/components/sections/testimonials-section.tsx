@@ -73,7 +73,7 @@ const cardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 }
 
@@ -94,7 +94,7 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <section id="testimonials" className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: '#0B1120' }}>
+    <section id="testimonials" className="py-20 md:py-28 relative overflow-hidden bg-background">
       {/* Background glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full pointer-events-none"
@@ -112,7 +112,7 @@ export function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: easeOut }}
-            className="mb-4 inline-block text-xs font-bold tracking-[3px] uppercase text-brand-glow"
+            className="mb-4 inline-block text-xs font-bold tracking-[3px] uppercase text-primary"
           >
             {t('label')}
           </motion.span>
@@ -121,7 +121,7 @@ export function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1, ease: easeOut }}
-            className="mb-4 text-3xl md:text-4xl font-bold text-white"
+            className="mb-4 text-3xl md:text-4xl font-bold text-foreground"
           >
             {t('title')}
           </motion.h2>
@@ -130,7 +130,7 @@ export function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2, ease: easeOut }}
-            className="mx-auto mb-8 max-w-2xl text-base text-slate-400"
+            className="mx-auto mb-8 max-w-2xl text-base text-muted-foreground"
           >
             {t('subtitle')}
           </motion.p>
@@ -139,7 +139,7 @@ export function TestimonialsSection() {
             whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.25, ease: easeOut }}
-            className="mx-auto h-[3px] w-12 rounded-full bg-brand-accent"
+            className="mx-auto h-[3px] w-12 rounded-full bg-primary"
           />
         </div>
 
@@ -162,11 +162,11 @@ export function TestimonialsSection() {
               <motion.div
                 key={testimonial.id}
                 variants={cardVariants}
-                className="group relative rounded-xl border border-brand-border bg-brand-surface p-6 transition-all duration-300 hover:border-brand-accent/30 hover:shadow-lg hover:shadow-brand-accent/5"
+                className="group relative rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
                 style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#3B82F6' }}
               >
                 {/* Quote icon */}
-                <Quote className="absolute top-6 end-6 h-8 w-8 text-brand-accent/15" />
+                <Quote className="absolute top-6 end-6 h-8 w-8 text-primary/15" />
 
                 {/* Stars */}
                 <div className="mb-4 flex gap-0.5">
@@ -176,7 +176,7 @@ export function TestimonialsSection() {
                       className={`h-4 w-4 ${
                         i < testimonial.rating
                           ? 'fill-amber-400 text-amber-400'
-                          : 'fill-none text-slate-700'
+                          : 'fill-none text-border'
                       }`}
                     />
                   ))}
@@ -184,19 +184,19 @@ export function TestimonialsSection() {
 
                 {/* Quote text */}
                 <p
-                  className="mb-6 min-h-[100px] text-[15px] leading-relaxed text-slate-300 italic"
+                  className="mb-6 min-h-[100px] text-[15px] leading-relaxed text-foreground/70 italic"
                   dir={locale === 'ar' ? 'rtl' : 'ltr'}
                 >
                   &ldquo;{quote}&rdquo;
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-3 border-t border-brand-border pt-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-brand-accent" style={{ backgroundColor: 'rgba(59,130,246,0.12)' }}>
+                <div className="flex items-center gap-3 border-t border-border pt-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-primary bg-primary/10">
                     {initials}
                   </div>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-white">
+                    <p className="truncate text-sm font-semibold text-foreground">
                       {testimonial.authorName}
                     </p>
                     <p className="truncate text-xs text-muted-foreground">{role}</p>

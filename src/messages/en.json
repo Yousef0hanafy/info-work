@@ -91,7 +91,15 @@
     "location": "Location",
     "status": "Status",
     "completed": "Completed",
-    "inProgress": "In Progress"
+    "inProgress": "In Progress",
+    "detailCapacity": "Capacity",
+    "detailDuration": "Duration",
+    "detailLocation": "Location",
+    "detailYear": "Year",
+    "detailClient": "Client",
+    "detailTechSpecs": "Technical Specifications",
+    "detailNoDescription": "Project details are available upon request. Contact us for the full project dossier including technical specifications, drawings, and commissioning reports.",
+    "closePanel": "Close"
   },
   "testimonials": {
     "label": "CLIENT TESTIMONIALS",

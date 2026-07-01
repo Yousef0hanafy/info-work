@@ -1,7 +1,106 @@
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
 
 generator client {
   provider = "prisma-client-js"
+}
+
+model Service {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  titleEn      String
+  titleAr      String
+  descriptionEn String
+  descriptionAr String
+  iconName     String
+  features     Json
+  sortOrder    Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  titleEn      String
+  titleAr      String
+  descriptionEn String?
+  descriptionAr String?
+  category     String
+  capacity     String?
+  duration     String?
+  status       String
+  clientName   String?
+  location     String?
+  year         Int?
+  thumbnail    String?
+  images       Json?
+  techSpecs    Json?
+  featured     Boolean  @default(false)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Testimonial {
+  id             String   @id @default(cuid())
+  quoteEn        String?
+  quoteAr        String
+  authorName     String
+  authorRoleEn   String
+  authorRoleAr   String
+  organization   String?
+  rating         Int
+  projectType    String?
+  featured       Boolean  @default(false)
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+model ContactMessage {
+  id             String   @id @default(cuid())
+  fullName       String
+  email          String
+  phone          String
+  company        String?
+  serviceInterest String
+  projectType    String?
+  budgetRange    String?
+  timeline       String?
+  message        String
+  createdAt      DateTime @default(now())
+
+  @@map("contact_messages")
+}
+
+model Client {
+  id          String   @id @default(cuid())
+  name        String
+  nameAr      String?
+  logoUrl     String?
+  website     String?
+  featured    Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("clients")
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
 }
