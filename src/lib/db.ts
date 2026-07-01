@@ -5,7 +5,13 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function createPrismaClient() {
-  return new PrismaClient()
+  return new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+  })
 }
 
 export const db = globalForPrisma.prisma ?? createPrismaClient()
