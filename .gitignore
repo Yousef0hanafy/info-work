@@ -30,8 +30,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +40,35 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# Database
+db/
+*.db
+*.db-journal
+
+# Dev server logs
+dev.log
+
+# Work logs and tool results
+worklog.md
+tool-results/
+
+# Download / analysis artifacts (not part of the website source)
+download/
+
+# Research scripts (not part of the website source)
+scripts/
+
+# System skills directory (not part of the website)
+skills/
+
+# AGENTS.md / CLAUDE.md (agent context, not project code)
+AGENTS.md
+CLAUDE.md
+
+# Lock files - use bun.lock
+package-lock.json
