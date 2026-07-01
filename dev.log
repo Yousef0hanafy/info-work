@@ -3,24 +3,217 @@ $ next dev
 - Local:         http://localhost:3000
 - Network:       http://21.0.14.57:3000
 - Environments: .env
-✓ Ready in 331ms
+✓ Ready in 468ms
 
-$ next dev
-▲ Next.js 16.2.9 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://21.0.14.57:3000
-- Environments: .env
-✓ Ready in 436ms
+ GET / 200 in 769ms (next.js: 223ms, application-code: 546ms)
+ GET / 200 in 156ms (next.js: 5ms, application-code: 151ms)
+ GET /api/projects 200 in 201ms (next.js: 93ms, application-code: 108ms)
+ GET /api/testimonials 200 in 236ms (next.js: 227ms, application-code: 9ms)
+✓ Compiled in 204ms
+[browser] In HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
 
-○ Compiling / ...
-▲ Next.js 16.2.9 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://21.0.14.57:3000
-- Environments: .env
-✓ Ready in 402ms
+  ...
+    <SegmentViewNode type="page" pagePath="page.tsx">
+      <SegmentTrieNode>
+      <HomePage>
+        <Navbar>
+          <header className="fixed top-...">
+            <nav className="mx-auto fl..." aria-label="Main navig...">
+              <LinkComponent>
+              <div>
+              <div className="flex items...">
+                <button>
+                <button>
+                <Button>
+                <Sheet open={false} onOpenChange={function bound dispatchSetState}>
+                  <DialogRoot data-slot="sheet" open={false} onOpenChange={function bound dispatchSetState}>
+                    <SheetTrigger asChild={true}>
+                      <DialogTrigger data-slot="sheet-trigger" asChild={true}>
+>                       <button
+>                         type="button"
+>                         onClick={function}
+>                         onMouseDown={function}
+>                         onKeyDown={function}
+>                         onKeyUp={function}
+>                         onPointerDown={function}
+>                         tabIndex={0}
+>                         disabled={false}
+>                         data-base-ui-click-trigger=""
+>                         id="base-ui-_R_3cpinelb_"
+>                         aria-haspopup="dialog"
+>                         aria-expanded={false}
+>                         aria-controls={undefined}
+>                         data-slot="sheet-trigger"
+>                         asChild={true}
+>                         ref={function}
+>                       >
+>                         <button
+>                           type="button"
+>                           className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foregroun..."
+>                           aria-label="Open menu"
+>                         >
+                    ...
+        ...
+    ...
+ 
+    at Set.forEach (<anonymous>) (<anonymous>)
+[browser] <button> cannot contain a nested <button>.
+See this log for the ancestor stack trace. 
+    at Set.forEach (<anonymous>) (<anonymous>)
+[browser] React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element. 
+React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+ GET / 200 in 128ms (next.js: 8ms, application-code: 121ms)
+ GET /api/projects 200 in 11ms (next.js: 4ms, application-code: 7ms)
+ GET /api/testimonials 200 in 7ms (next.js: 2ms, application-code: 5ms)
+ GET /api/projects 200 in 9ms (next.js: 4ms, application-code: 6ms)
+[browser] In HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
 
- GET / 200 in 471ms (next.js: 141ms, application-code: 330ms)
- GET /api/projects 200 in 176ms (next.js: 82ms, application-code: 94ms)
- GET /api/testimonials 200 in 33ms (next.js: 26ms, application-code: 7ms)
- GET / 200 in 94ms (next.js: 3ms, application-code: 91ms)
- GET / 200 in 70ms (next.js: 3ms, application-code: 67ms)
+  ...
+    <SegmentViewNode type="page" pagePath="page.tsx">
+      <SegmentTrieNode>
+      <HomePage>
+        <Navbar>
+          <header className="fixed top-...">
+            <nav className="mx-auto fl..." aria-label="Main navig...">
+              <LinkComponent>
+              <div>
+              <div className="flex items...">
+                <button>
+                <Button>
+                <Sheet open={false} onOpenChange={function bound dispatchSetState}>
+                  <DialogRoot data-slot="sheet" open={false} onOpenChange={function bound dispatchSetState}>
+                    <SheetTrigger asChild={true}>
+                      <DialogTrigger data-slot="sheet-trigger" asChild={true}>
+>                       <button
+>                         type="button"
+>                         onClick={function}
+>                         onMouseDown={function}
+>                         onKeyDown={function}
+>                         onKeyUp={function}
+>                         onPointerDown={function}
+>                         tabIndex={0}
+>                         disabled={false}
+>                         data-base-ui-click-trigger=""
+>                         id="base-ui-_R_3cpinelb_"
+>                         aria-haspopup="dialog"
+>                         aria-expanded={false}
+>                         aria-controls={undefined}
+>                         data-slot="sheet-trigger"
+>                         asChild={true}
+>                         ref={function}
+>                       >
+>                         <button
+>                           type="button"
+>                           className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foregroun..."
+>                           aria-label="Open menu"
+>                         >
+                    ...
+        ...
+    ...
+ 
+ GET /api/testimonials 200 in 20ms (next.js: 13ms, application-code: 7ms)
+[browser] <button> cannot contain a nested <button>.
+See this log for the ancestor stack trace. 
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+[browser] React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element. 
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at button (<anonymous>)
+    at Navbar (src/components/layout/navbar.tsx:194:15)
+    at HomePage (src/app/page.tsx:15:7)
+  192 |           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+  193 |             <SheetTrigger asChild>
+> 194 |               <button
+      |               ^
+  195 |                 type="button"
+  196 |                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg tex...
+  197 |                 aria-label="Open menu"
+ GET / 200 in 172ms (next.js: 6ms, application-code: 166ms)
+[browser] In HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
+
+  ...
+    <SegmentViewNode type="page" pagePath="page.tsx">
+      <SegmentTrieNode>
+      <HomePage>
+        <Navbar>
+          <header className="fixed top-...">
+            <nav className="mx-auto fl..." aria-label="Main navig...">
+              <LinkComponent>
+              <div>
+              <div className="flex items...">
+                <button>
+                <Button>
+                <Sheet open={false} onOpenChange={function bound dispatchSetState}>
+                  <DialogRoot data-slot="sheet" open={false} onOpenChange={function bound dispatchSetState}>
+                    <SheetTrigger asChild={true}>
+                      <DialogTrigger data-slot="sheet-trigger" asChild={true}>
+>                       <button
+>                         type="button"
+>                         onClick={function}
+>                         onMouseDown={function}
+>                         onKeyDown={function}
+>                         onKeyUp={function}
+>                         onPointerDown={function}
+>                         tabIndex={0}
+>                         disabled={false}
+>                         data-base-ui-click-trigger=""
+>                         id="base-ui-_R_3cpinelb_"
+>                         aria-haspopup="dialog"
+>                         aria-expanded={false}
+>                         aria-controls={undefined}
+>                         data-slot="sheet-trigger"
+>                         asChild={true}
+>                         ref={function}
+>                       >
+>                         <button
+>                           type="button"
+>                           className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foregroun..."
+>                           aria-label="Open menu"
+>                         >
+                    ...
+        ...
+    ...
+ 
+[browser] <button> cannot contain a nested <button>.
+See this log for the ancestor stack trace. 
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+[browser] React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element. 
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at button (<anonymous>)
+    at Navbar (src/components/layout/navbar.tsx:194:15)
+    at HomePage (src/app/page.tsx:15:7)
+  192 |           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+  193 |             <SheetTrigger asChild>
+> 194 |               <button
+      |               ^
+  195 |                 type="button"
+  196 |                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg tex...
+  197 |                 aria-label="Open menu"
+ GET /api/projects 200 in 15ms (next.js: 3ms, application-code: 12ms)
+ GET /api/testimonials 200 in 9ms (next.js: 2ms, application-code: 6ms)
+ GET /api/projects 200 in 13ms (next.js: 4ms, application-code: 9ms)
+ GET /api/testimonials 200 in 21ms (next.js: 14ms, application-code: 7ms)

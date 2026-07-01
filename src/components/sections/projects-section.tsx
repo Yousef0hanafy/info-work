@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useMemo, useSyncExternalStore } from 'react'
-import { useTranslations } from '@/lib/i18n-client'
+import { useState, useEffect, useMemo } from 'react'
+import { useTranslations, useLocale } from '@/lib/i18n-client'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Droplets,
@@ -33,8 +33,8 @@ interface Project {
 const FALLBACK_PROJECTS: Project[] = [
   {
     id: '1',
-    titleEn: 'Industrial Wastewater Treatment',
-    titleAr: 'معالجة الصرف الصناعي',
+    titleEn: 'Industrial Wastewater Treatment Plant',
+    titleAr: 'محطة معالجة الصرف الصناعي',
     category: 'sewage-treatment',
     capacity: '200 m³/day',
     duration: '6 months',
@@ -55,8 +55,8 @@ const FALLBACK_PROJECTS: Project[] = [
   },
   {
     id: '3',
-    titleEn: 'HVAC System Installation',
-    titleAr: 'تركيب نظام تكييف مركزي',
+    titleEn: 'HVAC System — Administrative Complex',
+    titleAr: 'نظام تكييف مركزي — مجمع إداري',
     category: 'hvac',
     capacity: '120 tons',
     duration: '4 months',
@@ -66,14 +66,69 @@ const FALLBACK_PROJECTS: Project[] = [
   },
   {
     id: '4',
-    titleEn: 'Fire Fighting Network',
-    titleAr: 'شبكة إطفاء حرائق',
+    titleEn: 'Fire Fighting Network — Industrial Zone',
+    titleAr: 'شبكة إطفاء حرائق — المنطقة الصناعية',
     category: 'fire-fighting',
     capacity: 'Full building',
     duration: '3 months',
     location: '10th Ramadan City',
     status: 'completed',
     year: 2024,
+  },
+  {
+    id: '5',
+    titleEn: 'Sewage Treatment — Residential Compound',
+    titleAr: 'معالجة الصرف الصحي — تجمع سكني',
+    category: 'sewage-treatment',
+    capacity: '350 m³/day',
+    duration: '8 months',
+    location: '6th October City',
+    status: 'completed',
+    year: 2023,
+  },
+  {
+    id: '6',
+    titleEn: 'Electromechanical Works — Water Station',
+    titleAr: 'أعمال كهروميكانيكية — محطة مياه',
+    category: 'electromechanical',
+    capacity: 'Full scope',
+    duration: '5 months',
+    location: 'Suez',
+    status: 'completed',
+    year: 2024,
+  },
+  {
+    id: '7',
+    titleEn: 'Civil Works — Water Infrastructure',
+    titleAr: 'أعمال مدنية — بنية تحتية مائية',
+    category: 'civil-works',
+    capacity: '2,500 m²',
+    duration: '7 months',
+    location: 'New Cairo',
+    status: 'in-progress',
+    year: 2025,
+  },
+  {
+    id: '8',
+    titleEn: 'UV Filtration System Upgrade',
+    titleAr: 'ترقية نظام الترشيح بالأشعة فوق البنفسجية',
+    category: 'water-treatment',
+    capacity: '1,000 m³/day',
+    duration: '3 months',
+    location: 'Alexandria',
+    status: 'completed',
+    year: 2024,
+  },
+  {
+    id: '9',
+    titleEn: 'HVAC — Hospital Complex',
+    titleAr: 'تكييف — مجمع مستشفيات',
+    category: 'hvac',
+    capacity: '200 tons',
+    duration: '6 months',
+    location: 'Sheikh Zayed City',
+    status: 'completed',
+    year: 2023,
   },
 ]
 
@@ -113,12 +168,7 @@ export function ProjectsSection() {
   const [projects, setProjects] = useState<Project[]>(FALLBACK_PROJECTS)
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all')
 
-  // Derive locale reactively from pathname
-  const locale = useSyncExternalStore(
-    () => () => {},
-    () => (window.location.pathname.startsWith('/ar') ? 'ar' as const : 'en' as const),
-    () => 'en' as const,
-  )
+  const locale = useLocale()
 
   // Fetch from API
   useEffect(() => {

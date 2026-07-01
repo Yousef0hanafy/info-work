@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
-import { useTranslations, useLocale } from '@/lib/i18n-client'
+import { useState, useCallback, useEffect, useContext, useSyncExternalStore } from 'react'
+import { useTranslations, useLocale, useDir, I18nContext } from '@/lib/i18n-client'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -38,17 +38,24 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: 'contact', href: '#contact' },
 ]
 
+// Track whether we're mounted (client-side) without triggering the lint rule
+const emptySubscribe = () => () => {}
+function useIsMounted() {
+  return useSyncExternalStore(emptySubscribe, () => true, () => false)
+}
+
 export function Navbar() {
   const t = useTranslations('nav')
   const locale = useLocale()
+  const dir = useDir()
+  const { setLocale } = useContext(I18nContext)
   const { theme, setTheme } = useTheme()
-  const isRTL = locale === 'ar'
-  const [mounted, setMounted] = useState(false)
+  const isRTL = dir === 'rtl'
+  const isMounted = useIsMounted()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
     const handleScroll = () => setScrolled(window.scrollY > 100)
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
@@ -70,10 +77,6 @@ export function Navbar() {
     [scrolled]
   )
 
-  const toggleLocale = () => {
-    return
-  }
-
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
@@ -85,6 +88,10 @@ export function Navbar() {
       const top = el.getBoundingClientRect().top + window.scrollY - navHeight
       window.scrollTo({ top, behavior: 'smooth' })
     }
+  }
+
+  const toggleLanguage = () => {
+    setLocale(locale === 'en' ? 'ar' : 'en')
   }
 
   return (
@@ -118,10 +125,7 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className={cn(
-                'relative px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground',
-                isRTL ? 'text-right' : 'text-left'
-              )}
+              className="relative px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {t(item.labelKey)}
             </a>
@@ -133,15 +137,16 @@ export function Navbar() {
           {/* Language Toggle */}
           <button
             type="button"
-            onClick={toggleLocale}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            onClick={toggleLanguage}
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Toggle language"
           >
             <Languages className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('language')}</span>
           </button>
 
           {/* Theme Toggle */}
-          {mounted && (
+          {isMounted && (
             <button
               type="button"
               onClick={toggleTheme}
@@ -180,17 +185,19 @@ export function Navbar() {
             onClick={scrollToContact}
           >
             <span>{t('getStarted')}</span>
-            {!isRTL && <ArrowRight className="h-4 w-4" />}
-            {isRTL && <ArrowRight className="h-4 w-4 rotate-180" />}
+            <ArrowRight className={cn('h-4 w-4', isRTL && 'rotate-180')} />
           </Button>
 
           {/* Mobile Menu */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
-              aria-label="Open menu"
-            >
-              <Menu className="h-5 w-5" />
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
+                aria-label="Open menu"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
             </SheetTrigger>
             <SheetContent
               side={isRTL ? 'right' : 'left'}
@@ -222,8 +229,7 @@ export function Navbar() {
                   onClick={scrollToContact}
                 >
                   {t('getStarted')}
-                  {!isRTL && <ArrowRight className="h-4 w-4" />}
-                  {isRTL && <ArrowRight className="h-4 w-4 rotate-180" />}
+                  <ArrowRight className={cn('h-4 w-4', isRTL && 'rotate-180')} />
                 </SheetClose>
               </div>
             </SheetContent>

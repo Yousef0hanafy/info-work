@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useSyncExternalStore } from 'react'
-import { useTranslations } from '@/lib/i18n-client'
+import { useState, useEffect } from 'react'
+import { useTranslations, useLocale } from '@/lib/i18n-client'
 import { motion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
 
@@ -92,12 +92,7 @@ export function TestimonialsSection() {
   const t = useTranslations('testimonials')
   const [testimonials, setTestimonials] = useState<Testimonial[]>(FALLBACK_TESTIMONIALS)
 
-  // Derive locale reactively from pathname
-  const locale = useSyncExternalStore(
-    () => () => {},
-    () => (window.location.pathname.startsWith('/ar') ? 'ar' as const : 'en' as const),
-    () => 'en' as const,
-  )
+  const locale = useLocale()
 
   // Fetch from API
   useEffect(() => {
@@ -164,10 +159,10 @@ export function TestimonialsSection() {
                 key={testimonial.id}
                 variants={cardVariants}
                 className="group relative rounded-xl border border-brand-border bg-brand-surface p-6 transition-colors duration-300 hover:border-brand-accent/40"
-                style={{ borderLeftWidth: 3, borderLeftColor: '#3B82F6' }}
+                style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#3B82F6' }}
               >
                 {/* Quote icon */}
-                <Quote className="absolute top-6 right-6 h-8 w-8 text-brand-accent/20" />
+                <Quote className="absolute top-6 end-6 h-8 w-8 text-brand-accent/20" />
 
                 {/* Stars */}
                 <div className="mb-4 flex gap-0.5">
