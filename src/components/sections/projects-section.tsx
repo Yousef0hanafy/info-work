@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslations, useLocale } from '@/lib/i18n-client'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
   Droplets,
   Waves,
@@ -15,6 +16,13 @@ import {
   MapPin,
   Eye,
 } from 'lucide-react'
+
+const PROJECT_IMAGES: Record<string, string> = {
+  'water-treatment': '/images/projects/water-treatment.png',
+  'sewage-treatment': '/images/projects/sewage-treatment.png',
+  'hvac': '/images/projects/hvac-systems.png',
+  'fire-fighting': '/images/projects/fire-fighting.png',
+}
 
 interface Project {
   id: string
@@ -171,17 +179,30 @@ export function ProjectsSection() {
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                   className="group relative overflow-hidden rounded-xl border border-brand-border bg-brand-surface transition-all duration-300 hover:border-brand-accent/30 hover:shadow-lg hover:shadow-brand-accent/5"
                 >
-                  {/* Header gradient */}
+                  {/* Header - Image or Icon fallback */}
                   <div className="relative h-48 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/15 via-brand-accent/5 to-transparent" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div
-                        className="rounded-2xl p-5 transition-transform duration-500 group-hover:scale-110"
-                        style={{ backgroundColor: 'rgba(59,130,246,0.08)' }}
-                      >
-                        <Icon className="h-10 w-10 text-brand-glow" strokeWidth={1.5} />
+                    {PROJECT_IMAGES[project.category] ? (
+                      <Image
+                        src={PROJECT_IMAGES[project.category]}
+                        alt={title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/15 via-brand-accent/5 to-transparent" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-surface via-transparent to-transparent" />
+                    {!PROJECT_IMAGES[project.category] && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div
+                          className="rounded-2xl p-5 transition-transform duration-500 group-hover:scale-110"
+                          style={{ backgroundColor: 'rgba(59,130,246,0.08)' }}
+                        >
+                          <Icon className="h-10 w-10 text-brand-glow" strokeWidth={1.5} />
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Category badge */}
                     <span className="absolute top-3 left-3 rounded-full bg-brand-dark/80 backdrop-blur-sm border border-brand-border px-3 py-1 text-xs font-medium text-brand-glow">

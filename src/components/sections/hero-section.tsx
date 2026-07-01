@@ -1,8 +1,9 @@
 'use client'
 
 import { useTranslations } from '@/lib/i18n-client'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ChevronDown, ArrowRight, Droplets } from 'lucide-react'
+import { ChevronDown, ArrowRight } from 'lucide-react'
 
 const stats = [
   { valueKey: 'projects', labelKey: 'projectsLabel' },
@@ -85,6 +86,19 @@ export function HeroSection() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ backgroundColor: '#0B1120' }}
     >
+      {/* Background image with overlay */}
+      <div className="absolute inset-0 overflow-hidden">
+        <Image
+          src="/images/hero/water-plant-hero.png"
+          alt=""
+          fill
+          className="object-cover opacity-30"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B1120] via-[#0B1120]/70 to-[#0B1120]" />
+      </div>
+
       {/* Animated gradient mesh background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -157,16 +171,7 @@ export function HeroSection() {
       >
         {/* Logo mark */}
         <motion.div variants={fadeUp} className="mb-6">
-          <div
-            className="inline-flex items-center justify-center w-14 h-14 rounded-2xl"
-            style={{
-              background: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(96,165,250,0.05))',
-              border: '1px solid rgba(59,130,246,0.2)',
-              boxShadow: '0 0 30px rgba(59,130,246,0.1)',
-            }}
-          >
-            <Droplets className="w-7 h-7" style={{ color: '#60A5FA' }} strokeWidth={1.8} />
-          </div>
+          <Image src="/logo.png" alt="Infeworks" width={56} height={56} className="rounded-2xl" priority />
         </motion.div>
 
         {/* Badge */}

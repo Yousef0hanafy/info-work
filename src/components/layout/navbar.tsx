@@ -5,8 +5,8 @@ import { useTranslations, useLocale, useDir, I18nContext } from '@/lib/i18n-clie
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
-  Droplets,
   Sun,
   Moon,
   Menu,
@@ -103,11 +103,9 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 transition-opacity hover:opacity-80"
+          className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
-            <Droplets className="h-5 w-5 text-primary" strokeWidth={2.2} />
-          </div>
+          <Image src="/logo.png" alt="Infeworks" width={32} height={32} className="rounded-lg" priority />
           <span className="text-lg font-bold tracking-tight text-foreground">
             Infeworks
           </span>
@@ -218,10 +216,8 @@ export function Navbar() {
               )}
             >
               <div className="flex items-center justify-between p-4 border-b border-border/50">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
-                    <Droplets className="h-5 w-5 text-primary" strokeWidth={2.2} />
-                  </div>
+                <div className="flex items-center gap-2.5">
+                  <Image src="/logo.png" alt="Infeworks" width={32} height={32} className="rounded-lg" />
                   <span className="font-bold text-foreground">Infeworks</span>
                 </div>
                 <button

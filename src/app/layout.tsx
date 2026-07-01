@@ -20,6 +20,18 @@ const cairo = Cairo({
 export const metadata: Metadata = {
   title: 'Infeworks — Engineering Water Intelligence',
   description: 'Turnkey water treatment, electromechanical, and civil infrastructure across Egypt and the MENA region.',
+  icons: {
+    icon: '/logo.png',
+    apple: '/apple-touch-icon.png',
+  },
+  openGraph: {
+    title: 'Infeworks — Engineering Water Intelligence',
+    description: 'From design to commissioning — we deliver turnkey water treatment, electromechanical, and civil infrastructure projects across Egypt and the MENA region.',
+    siteName: 'Infeworks',
+    type: 'website',
+    locale: 'en_US',
+    alternateLocale: 'ar_EG',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

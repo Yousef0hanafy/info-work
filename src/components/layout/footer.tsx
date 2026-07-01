@@ -1,7 +1,8 @@
 'use client'
 
 import { useTranslations } from '@/lib/i18n-client'
-import { Droplets, Phone, Mail, MapPin, Send, Globe } from 'lucide-react'
+import Image from 'next/image'
+import { Phone, Mail, MapPin, Send, Globe } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -39,9 +40,7 @@ export function Footer() {
           {/* Column 1: Logo & Description */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
-                <Droplets className="h-5 w-5 text-primary" strokeWidth={2.2} />
-              </div>
+              <Image src="/logo.png" alt="Infeworks" width={32} height={32} className="rounded-lg" />
               <span className="text-lg font-bold tracking-tight text-foreground">
                 Infeworks
               </span>

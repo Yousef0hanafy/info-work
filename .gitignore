@@ -71,4 +71,7 @@ AGENTS.md
 CLAUDE.md
 
 # Lock files - use bun.lock
-package-lock.json
+package-lock.jsonupload/
+public/logo-cropped.png
+public/logo-extracted.png
+public/logo-transparent.png
