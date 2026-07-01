@@ -132,3 +132,26 @@ Stage Summary:
 - 3 API routes for data fetching and lead capture
 - Database seeded with realistic content
 - Build passes cleanly, ESLint passes with 0 errors
+
+---
+Task ID: 3-2
+Agent: Main Agent
+Task: Fix and verify Infeworks website for preview display
+
+Work Log:
+- Analyzed existing project structure: all 8 sections, navbar, footer, i18n, Prisma schema already built
+- Identified 3 critical bugs: nested `<button>` elements (SheetTrigger + Button), API routes returning 404 (routes under [locale] path), i18n client not resolving nested translation keys
+- Fixed nested button issue: replaced SheetTrigger asChild + Button with plain SheetTrigger, replaced SheetClose asChild + Button/anchor with native elements
+- Fixed API 404s: moved /api/projects, /api/testimonials, /api/contact routes from src/app/[locale]/api/ to src/app/api/
+- Fixed hydration mismatch: replaced useSyncExternalStore with useEffect + useState for scroll detection and mounted state
+- Rewrote i18n-client.ts: added deep path resolution (resolvePath, resolveNested, resolveNestedObj) to support dot-notation keys within namespaces
+- Fixed stats keys in hero-section: removed redundant 'stats.' prefix from valueKey/labelKey
+- Added allowedDevOrigins for preview panel CORS
+- Browser-verified: all 8 sections render with correct translations, navigation works, contact form labels/options translated, APIs return 200
+
+Stage Summary:
+- Site fully functional with zero console errors
+- All EN translations resolving correctly
+- Contact form with 10 fields, service/budget/timeline selects working
+- Framer Motion animations active on all sections
+- Prisma schema with Project, Service, Testimonial, ContactMessage, Client, Setting models

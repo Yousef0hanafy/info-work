@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  allowedDevOrigins: [
+    'preview-chat-926184af-7dae-41fd-9943-dce06e1ce6e0.space-z.ai',
+  ],
 };
 
 export default withNextIntl(nextConfig);

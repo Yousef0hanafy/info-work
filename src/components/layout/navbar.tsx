@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useSyncExternalStore } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useTranslations, useLocale } from '@/lib/i18n-client'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
@@ -43,22 +43,17 @@ export function Navbar() {
   const locale = useLocale()
   const { theme, setTheme } = useTheme()
   const isRTL = locale === 'ar'
-
-  const scrolled = useSyncExternalStore(
-    (onStoreChange) => {
-      window.addEventListener('scroll', onStoreChange, { passive: true })
-      return () => window.removeEventListener('scroll', onStoreChange)
-    },
-    () => window.scrollY > 100,
-    () => false
-  )
+  const [mounted, setMounted] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  )
+  useEffect(() => {
+    setMounted(true)
+    const handleScroll = () => setScrolled(window.scrollY > 100)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -83,6 +78,15 @@ export function Navbar() {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
+  const scrollToContact = () => {
+    const el = document.getElementById('contact')
+    if (el) {
+      const navHeight = scrolled ? 56 : 64
+      const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
+  }
+
   return (
     <header
       className={cn(
@@ -98,7 +102,7 @@ export function Navbar() {
       >
         {/* Logo */}
         <Link
-          href={`/${locale}`}
+          href="/"
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
         >
           <Droplets className="h-7 w-7 text-primary" strokeWidth={2.2} />
@@ -127,23 +131,21 @@ export function Navbar() {
         {/* Right Actions */}
         <div className="flex items-center gap-1.5">
           {/* Language Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
+            type="button"
             onClick={toggleLocale}
-            className="h-9 w-9 text-muted-foreground hover:text-foreground"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Toggle language"
           >
             <Languages className="h-4 w-4" />
-          </Button>
+          </button>
 
           {/* Theme Toggle */}
           {mounted && (
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
+              type="button"
               onClick={toggleTheme}
-              className="h-9 w-9 text-muted-foreground hover:text-foreground"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label="Toggle theme"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -169,23 +171,13 @@ export function Navbar() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </Button>
+            </button>
           )}
 
           {/* CTA Button — Desktop only */}
           <Button
-            asChild
             className="hidden h-9 gap-2 rounded-lg px-4 text-sm font-semibold md:inline-flex"
-            onClick={(e) => {
-              e.preventDefault()
-              const el = document.getElementById('contact')
-              if (el) {
-                const navHeight = scrolled ? 56 : 64
-                const top =
-                  el.getBoundingClientRect().top + window.scrollY - navHeight
-                window.scrollTo({ top, behavior: 'smooth' })
-              }
-            }}
+            onClick={scrollToContact}
           >
             <span>{t('getStarted')}</span>
             {!isRTL && <ArrowRight className="h-4 w-4" />}
@@ -194,15 +186,11 @@ export function Navbar() {
 
           {/* Mobile Menu */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-9 w-9 text-muted-foreground hover:text-foreground md:hidden"
-                aria-label="Open menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
+            <SheetTrigger
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
             </SheetTrigger>
             <SheetContent
               side={isRTL ? 'right' : 'left'}
@@ -217,30 +205,25 @@ export function Navbar() {
 
               <div className="flex flex-col gap-1 px-4 pt-4">
                 {NAV_ITEMS.map((item) => (
-                  <SheetClose asChild key={item.href}>
-                    <a
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href)}
-                      className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                    >
-                      {t(item.labelKey)}
-                    </a>
-                  </SheetClose>
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    {t(item.labelKey)}
+                  </a>
                 ))}
               </div>
 
               <div className="mt-auto border-t border-border/50 p-4">
-                <SheetClose asChild>
-                  <Button className="w-full gap-2" asChild>
-                    <a
-                      href="#contact"
-                      onClick={(e) => handleNavClick(e, '#contact')}
-                    >
-                      {t('getStarted')}
-                      {!isRTL && <ArrowRight className="h-4 w-4" />}
-                      {isRTL && <ArrowRight className="h-4 w-4 rotate-180" />}
-                    </a>
-                  </Button>
+                <SheetClose
+                  className="flex w-full items-center justify-center gap-2 h-11 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/80"
+                  onClick={scrollToContact}
+                >
+                  {t('getStarted')}
+                  {!isRTL && <ArrowRight className="h-4 w-4" />}
+                  {isRTL && <ArrowRight className="h-4 w-4 rotate-180" />}
                 </SheetClose>
               </div>
             </SheetContent>

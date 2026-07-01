@@ -9,35 +9,53 @@ type NestedKeyOf<T> = T extends object
   }[keyof T & string]
   : never
 
-export function useTranslations(namespace?: string) {
-  if (namespace) {
-    const ns = (en as Record<string, unknown>)[namespace] as Record<string, string> | undefined
-    return (key: string, ...args: unknown[]) => {
-      if (!ns) return key
-      let val = ns[key] ?? key
-      // Simple interpolation: {var} replacement
-      args.forEach((arg, i) => {
-        val = val.replace(`{${i}}`, String(arg))
-      })
-      return val
+/**
+ * Resolve a dot-notated key against a nested object, returning the string value.
+ * e.g. resolveNested(obj, 'waterTreatment.title') => "Water Treatment Plants"
+ */
+function resolveNested(obj: unknown, path: string): string {
+  const result = resolvePath(obj, path)
+  return typeof result === 'string' ? result : path
+}
+
+/**
+ * Resolve a dot-notated path against a nested object, returning the raw value.
+ * e.g. resolveNestedObj(en, 'contact.form') => { fullName: "...", ... }
+ */
+function resolveNestedObj(obj: unknown, path: string): unknown {
+  return resolvePath(obj, path)
+}
+
+function resolvePath(obj: unknown, path: string): unknown {
+  const keys = path.split('.')
+  let current: unknown = obj
+  for (const k of keys) {
+    if (current && typeof current === 'object' && k in (current as Record<string, unknown>)) {
+      current = (current as Record<string, unknown>)[k]
+    } else {
+      return path
     }
   }
-  return (key: NestedKeyOf<typeof en>, ...args: unknown[]) => {
-    const keys = key.split('.')
-    // @ts-expect-error — dynamic key access
-    let val: unknown = en
-    for (const k of keys) {
-      if (val && typeof val === 'object' && k in (val as Record<string, unknown>)) {
-        val = (val as Record<string, unknown>)[k]
-      } else {
-        return key
+  return current
+}
+
+export function useTranslations(namespace?: string) {
+  // Resolve namespace using deep path (e.g., 'contact.form' => en.contact.form)
+  const ns = namespace ? resolveNestedObj(en, namespace) : en
+  return (key: string, ...args: unknown[]) => {
+    let val = resolveNested(ns, key)
+    // Positional interpolation: {0}, {1}, etc.
+    args.forEach((arg, i) => {
+      val = val.replace(`{${i}}`, String(arg))
+    })
+    // Named interpolation from last arg if it's an object
+    if (args.length > 0 && typeof args[args.length - 1] === 'object' && args[args.length - 1] !== null) {
+      const params = args[args.length - 1] as Record<string, string>
+      for (const [k, v] of Object.entries(params)) {
+        val = val.replace(`{${k}}`, v)
       }
     }
-    let str = String(val ?? key)
-    args.forEach((arg, i) => {
-      str = str.replace(`{${i}}`, String(arg))
-    })
-    return str
+    return val
   }
 }
 

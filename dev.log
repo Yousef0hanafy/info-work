@@ -1,12 +1,26 @@
+$ next dev
 ▲ Next.js 16.2.9 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://21.0.14.57:3000
 - Environments: .env
-✓ Ready in 464ms
-Attention: Next.js now collects completely anonymous telemetry regarding usage.
-This information is used to shape Next.js' roadmap and prioritize features.
-You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-https://nextjs.org/telemetry
+✓ Ready in 331ms
 
-⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+$ next dev
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://21.0.14.57:3000
+- Environments: .env
+✓ Ready in 436ms
 
+○ Compiling / ...
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://21.0.14.57:3000
+- Environments: .env
+✓ Ready in 402ms
+
+ GET / 200 in 471ms (next.js: 141ms, application-code: 330ms)
+ GET /api/projects 200 in 176ms (next.js: 82ms, application-code: 94ms)
+ GET /api/testimonials 200 in 33ms (next.js: 26ms, application-code: 7ms)
+ GET / 200 in 94ms (next.js: 3ms, application-code: 91ms)
+ GET / 200 in 70ms (next.js: 3ms, application-code: 67ms)

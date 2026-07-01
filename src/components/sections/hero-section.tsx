@@ -7,10 +7,10 @@ import { ChevronDown } from 'lucide-react'
 const titleWords = ['Engineering', 'Water', 'Intelligence']
 
 const stats = [
-  { valueKey: 'stats.projects', labelKey: 'stats.projectsLabel' },
-  { valueKey: 'stats.years', labelKey: 'stats.yearsLabel' },
-  { valueKey: 'stats.clients', labelKey: 'stats.clientsLabel' },
-  { valueKey: 'stats.countries', labelKey: 'stats.countriesLabel' },
+  { valueKey: 'projects', labelKey: 'projectsLabel' },
+  { valueKey: 'years', labelKey: 'yearsLabel' },
+  { valueKey: 'clients', labelKey: 'clientsLabel' },
+  { valueKey: 'countries', labelKey: 'countriesLabel' },
 ] as const
 
 const containerVariants = {
