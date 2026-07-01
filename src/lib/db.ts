@@ -5,15 +5,7 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function createPrismaClient() {
-  const databaseUrl = process.env.DATABASE_URL || "postgresql://mock:mock@localhost:5432/mock?sslmode=require"
-
-  return new PrismaClient({
-    datasources: {
-      db: {
-        url: databaseUrl,
-      },
-    },
-  })
+  return new PrismaClient()
 }
 
 export const db = globalForPrisma.prisma ?? createPrismaClient()
