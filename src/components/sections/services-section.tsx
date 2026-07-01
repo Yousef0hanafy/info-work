@@ -38,21 +38,14 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.07,
+      delay: i * 0.06,
       duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: [0.22, 1, 0.36, 1],
     },
   }),
 }
 
-const headerVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
-}
+const easeOut = [0.22, 1, 0.36, 1] as const
 
 export function ServicesSection() {
   const t = useTranslations('services')
@@ -60,10 +53,19 @@ export function ServicesSection() {
   return (
     <section
       id="services"
-      className="py-16 md:py-24"
+      className="py-20 md:py-28 relative overflow-hidden"
       style={{ backgroundColor: '#0F172A' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Subtle gradient glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(59,130,246,0.04) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           className="text-center max-w-3xl mx-auto mb-16"
@@ -78,14 +80,20 @@ export function ServicesSection() {
           <motion.span
             className="inline-block text-xs font-bold tracking-[3px] uppercase"
             style={{ color: '#3B82F6' }}
-            variants={headerVariants}
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
+            }}
           >
             {t('label')}
           </motion.span>
 
           <motion.h2
-            className="mt-4 text-2xl md:text-[28px] font-bold text-white"
-            variants={headerVariants}
+            className="mt-4 text-3xl md:text-4xl font-bold text-white"
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
+            }}
           >
             {t('title')}
           </motion.h2>
@@ -98,69 +106,92 @@ export function ServicesSection() {
               backgroundColor: '#3B82F6',
               borderRadius: '2px',
             }}
-            variants={headerVariants}
+            variants={{
+              hidden: { opacity: 0, scaleX: 0 },
+              visible: { opacity: 1, scaleX: 1, transition: { duration: 0.4, ease: easeOut } },
+            }}
           />
 
           <motion.p
-            className="mt-5 text-base leading-relaxed"
+            className="mt-6 text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
             style={{ color: '#94A3B8' }}
-            variants={headerVariants}
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
+            }}
           >
             {t('subtitle')}
           </motion.p>
         </motion.div>
 
         {/* Service Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {services.map((service, i) => {
             const Icon = service.icon
             return (
               <motion.article
                 key={service.slug}
-                className="group relative rounded-xl p-6 transition-shadow duration-300 cursor-default"
+                className="group relative rounded-xl p-6 transition-all duration-300 cursor-default"
                 style={{
                   backgroundColor: '#1A2332',
-                  border: '1.5px solid #2D3B4F',
+                  border: '1px solid #2D3B4F',
                 }}
                 custom={i}
                 variants={cardVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: '-60px' }}
+                viewport={{ once: true, margin: '-40px' }}
                 whileHover={{
-                  borderColor: '#3B82F6',
-                  y: -2,
-                  boxShadow: '0 8px 32px rgba(59,130,246,0.12)',
-                  transition: { duration: 0.25 },
+                  borderColor: 'rgba(59,130,246,0.4)',
+                  y: -4,
+                  boxShadow: '0 12px 40px rgba(59,130,246,0.08)',
+                  transition: { duration: 0.3, ease: 'easeOut' },
                 }}
               >
-                {/* Icon */}
+                {/* Hover glow effect */}
                 <div
-                  className="flex items-center justify-center w-12 h-12 rounded-xl"
-                  style={{ backgroundColor: 'rgba(59,130,246,0.1)' }}
-                >
-                  <Icon className="w-7 h-7" style={{ color: '#3B82F6' }} />
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(circle at 50% 0%, rgba(59,130,246,0.06) 0%, transparent 70%)',
+                  }}
+                />
+
+                {/* Icon */}
+                <div className="relative">
+                  <div
+                    className="flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 group-hover:scale-110"
+                    style={{
+                      backgroundColor: 'rgba(59,130,246,0.08)',
+                      border: '1px solid rgba(59,130,246,0.1)',
+                    }}
+                  >
+                    <Icon
+                      className="w-6 h-6 transition-colors duration-300"
+                      style={{ color: '#60A5FA' }}
+                    />
+                  </div>
                 </div>
 
                 {/* Title */}
-                <h3
-                  className="mt-4 text-lg font-semibold text-white"
-                >
+                <h3 className="relative mt-5 text-lg font-semibold text-white">
                   {t(`${service.key}.title`)}
                 </h3>
 
                 {/* Description */}
                 <p
-                  className="mt-2 text-sm leading-relaxed"
-                  style={{ color: '#94A3B8' }}
+                  className="relative mt-2.5 text-sm leading-relaxed"
+                  style={{ color: '#64748B' }}
                 >
                   {t(`${service.key}.description`)}
                 </p>
 
                 {/* Learn More */}
-                <div className="mt-5 flex items-center gap-1.5 text-sm font-medium group-hover:gap-3 transition-all duration-300" style={{ color: '#60A5FA' }}>
+                <div
+                  className="relative mt-5 flex items-center gap-1.5 text-sm font-medium transition-all duration-300 group-hover:gap-2.5"
+                  style={{ color: '#60A5FA' }}
+                >
                   {t('learnMore')}
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </motion.article>
             )

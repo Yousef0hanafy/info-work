@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from '@/lib/i18n-client'
-import { type LucideIcon, Droplets, Phone, Mail, MapPin, Send, Globe } from 'lucide-react'
+import { Droplets, Phone, Mail, MapPin, Send, Globe } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -13,18 +13,7 @@ const QUICK_LINKS = [
   { key: 'contact', href: '#contact' },
 ] as const
 
-const SERVICE_AREAS = [
-  'Cairo',
-  'Delta',
-  'New Administrative Capital',
-  'Red Sea',
-  'MENA',
-] as const
-
-const SOCIAL_LINKS: { icon: LucideIcon; href: string; label: string }[] = [
-  { icon: Globe, href: 'https://facebook.com/infeworks', label: 'Facebook' },
-  { icon: Globe, href: 'https://linkedin.com/company/infeworks', label: 'LinkedIn' },
-] as const
+const SERVICE_AREAS = ['Cairo', 'Delta', 'New Administrative Capital', 'Red Sea', 'MENA'] as const
 
 export function Footer() {
   const t = useTranslations('footer')
@@ -43,14 +32,16 @@ export function Footer() {
   }
 
   return (
-    <footer className="mt-auto border-t border-border/50 bg-card/50">
+    <footer className="mt-auto border-t border-border/50" style={{ backgroundColor: '#0B1120' }}>
       {/* Main Footer Content */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           {/* Column 1: Logo & Description */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Droplets className="h-7 w-7 text-primary" strokeWidth={2.2} />
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+                <Droplets className="h-5 w-5 text-primary" strokeWidth={2.2} />
+              </div>
               <span className="text-lg font-bold tracking-tight text-foreground">
                 Infeworks
               </span>
@@ -58,26 +49,31 @@ export function Footer() {
             <p className="text-sm leading-relaxed text-muted-foreground">
               {t('description')}
             </p>
-            {/* Social Icons */}
             <div className="flex items-center gap-2 pt-2">
-              {SOCIAL_LINKS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-4 w-4" />
-                </a>
-              ))}
+              <a
+                href="https://facebook.com/infeworks"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label="Facebook"
+              >
+                <Globe className="h-4 w-4" />
+              </a>
+              <a
+                href="https://linkedin.com/company/infeworks"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label="LinkedIn"
+              >
+                <Globe className="h-4 w-4" />
+              </a>
             </div>
           </div>
 
           {/* Column 2: Quick Links */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-foreground">
               {t('quickLinks')}
             </h3>
             <ul className="space-y-2.5">
@@ -97,7 +93,7 @@ export function Footer() {
 
           {/* Column 3: Service Areas */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-foreground">
               {t('serviceAreas')}
             </h3>
             <ul className="space-y-2.5">
@@ -111,39 +107,24 @@ export function Footer() {
 
           {/* Column 4: Contact Info */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-foreground">
               {t('contactInfo')}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span className="text-sm text-muted-foreground">
-                  {tContact('info.address')}
-                </span>
+                <span className="text-sm text-muted-foreground">{tContact('info.address')}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 shrink-0 text-primary" />
                 <div className="space-y-0.5">
-                  <a
-                    href="tel:+201006249420"
-                    className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {tContact('info.phone1')}
-                  </a>
-                  <a
-                    href="tel:+201118660042"
-                    className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {tContact('info.phone2')}
-                  </a>
+                  <a href="tel:+201006249420" className="block text-sm text-muted-foreground transition-colors hover:text-foreground">{tContact('info.phone1')}</a>
+                  <a href="tel:+201118660042" className="block text-sm text-muted-foreground transition-colors hover:text-foreground">{tContact('info.phone2')}</a>
                 </div>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 shrink-0 text-primary" />
-                <a
-                  href="mailto:info@infeworks.com"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
+                <a href="mailto:info@infeworks.com" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                   {tContact('info.email')}
                 </a>
               </li>
@@ -151,19 +132,15 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="mt-10 rounded-xl border border-border/50 bg-muted/30 p-6">
-          <h3 className="mb-2 text-sm font-semibold text-foreground">
-            {t('newsletter')}
-          </h3>
-          <p className="mb-4 text-xs text-muted-foreground">
-            {t('newsletterPlaceholder')}
-          </p>
+        {/* Newsletter */}
+        <div className="mt-10 rounded-xl border border-border/50 p-6" style={{ backgroundColor: 'rgba(26,35,50,0.5)' }}>
+          <h3 className="mb-2 text-sm font-semibold text-foreground">{t('newsletter')}</h3>
+          <p className="mb-4 text-xs text-muted-foreground">{t('newsletterPlaceholder')}</p>
           <div className="flex gap-2">
             <Input
               type="email"
               placeholder={t('newsletterPlaceholder')}
-              className="h-9 flex-1 bg-background text-sm"
+              className="h-9 flex-1 bg-background text-sm border-border"
               readOnly
             />
             <Button size="default" className="h-9 gap-2 px-4 text-sm">
@@ -177,22 +154,10 @@ export function Footer() {
       {/* Bottom Bar */}
       <Separator className="bg-border/50" />
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-5 sm:flex-row sm:px-6 lg:px-8">
-        <p className="text-xs text-muted-foreground">
-          {t('copyright', { year: currentYear })}
-        </p>
+        <p className="text-xs text-muted-foreground">{t('copyright', { year: currentYear })}</p>
         <div className="flex items-center gap-4">
-          <a
-            href="#"
-            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {t('privacy')}
-          </a>
-          <a
-            href="#"
-            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {t('terms')}
-          </a>
+          <a href="#" className="text-xs text-muted-foreground transition-colors hover:text-foreground">{t('privacy')}</a>
+          <a href="#" className="text-xs text-muted-foreground transition-colors hover:text-foreground">{t('terms')}</a>
         </div>
       </div>
     </footer>

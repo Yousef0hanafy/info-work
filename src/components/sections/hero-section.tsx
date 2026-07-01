@@ -2,9 +2,7 @@
 
 import { useTranslations } from '@/lib/i18n-client'
 import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
-
-const titleWords = ['Engineering', 'Water', 'Intelligence']
+import { ChevronDown, ArrowRight, Droplets } from 'lucide-react'
 
 const stats = [
   { valueKey: 'projects', labelKey: 'projectsLabel' },
@@ -18,17 +16,17 @@ const containerVariants = {
   visible: {
     transition: {
       staggerChildren: 0.08,
-      delayChildren: 0.2,
+      delayChildren: 0.3,
     },
   },
 }
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
@@ -38,11 +36,43 @@ const statVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.8 + i * 0.12,
+      delay: 1.0 + i * 0.12,
       duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: [0.22, 1, 0.36, 1],
     },
   }),
+}
+
+// Animated water particles
+function WaterParticles() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            width: 4 + i * 2,
+            height: 4 + i * 2,
+            background: `rgba(59, 130, 246, ${0.15 - i * 0.02})`,
+            left: `${15 + i * 15}%`,
+            bottom: '-5%',
+          }}
+          animate={{
+            y: [-20, -400 - i * 60],
+            opacity: [0, 0.6, 0],
+            scale: [0.8, 1, 0.5],
+          }}
+          transition={{
+            duration: 4 + i * 0.5,
+            repeat: Infinity,
+            delay: i * 0.8,
+            ease: 'easeOut',
+          }}
+        />
+      ))}
+    </div>
+  )
 }
 
 export function HeroSection() {
@@ -61,9 +91,9 @@ export function HeroSection() {
           className="absolute inset-0"
           animate={{
             background: [
-              'radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59,130,246,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 20%, rgba(96,165,250,0.04) 0%, transparent 50%)',
-              'radial-gradient(ellipse 60% 80% at 70% 60%, rgba(59,130,246,0.07) 0%, transparent 60%), radial-gradient(ellipse 80% 60% at 30% 30%, rgba(96,165,250,0.05) 0%, transparent 50%)',
-              'radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59,130,246,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 20%, rgba(96,165,250,0.04) 0%, transparent 50%)',
+              'radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59,130,246,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 20%, rgba(96,165,250,0.05) 0%, transparent 50%)',
+              'radial-gradient(ellipse 60% 80% at 70% 60%, rgba(59,130,246,0.09) 0%, transparent 60%), radial-gradient(ellipse 80% 60% at 30% 30%, rgba(96,165,250,0.06) 0%, transparent 50%)',
+              'radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59,130,246,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 20%, rgba(96,165,250,0.05) 0%, transparent 50%)',
             ],
           }}
           transition={{
@@ -73,6 +103,9 @@ export function HeroSection() {
           }}
         />
       </div>
+
+      {/* Water particles */}
+      <WaterParticles />
 
       {/* Grid pattern overlay */}
       <div
@@ -89,19 +122,30 @@ export function HeroSection() {
         className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%)',
+            'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)',
           filter: 'blur(40px)',
         }}
       />
 
-      {/* Secondary orb — bottom left for depth */}
+      {/* Secondary orb — bottom left */}
       <div
         className="absolute -bottom-48 -left-48 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)',
+            'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)',
           filter: 'blur(60px)',
         }}
+      />
+
+      {/* Water line decoration */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.3) 30%, rgba(59,130,246,0.5) 50%, rgba(59,130,246,0.3) 70%, transparent)',
+        }}
+        initial={{ opacity: 0, scaleX: 0.5 }}
+        animate={{ opacity: 1, scaleX: 1 }}
+        transition={{ delay: 1.2, duration: 1, ease: 'easeOut' }}
       />
 
       {/* Content */}
@@ -111,14 +155,28 @@ export function HeroSection() {
         initial="hidden"
         animate="visible"
       >
+        {/* Logo mark */}
+        <motion.div variants={fadeUp} className="mb-6">
+          <div
+            className="inline-flex items-center justify-center w-14 h-14 rounded-2xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(96,165,250,0.05))',
+              border: '1px solid rgba(59,130,246,0.2)',
+              boxShadow: '0 0 30px rgba(59,130,246,0.1)',
+            }}
+          >
+            <Droplets className="w-7 h-7" style={{ color: '#60A5FA' }} strokeWidth={1.8} />
+          </div>
+        </motion.div>
+
         {/* Badge */}
         <motion.div variants={fadeUp}>
           <span
             className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium"
             style={{
-              backgroundColor: 'rgba(59,130,246,0.1)',
+              backgroundColor: 'rgba(59,130,246,0.08)',
               color: '#60A5FA',
-              border: '1px solid rgba(59,130,246,0.2)',
+              border: '1px solid rgba(59,130,246,0.15)',
             }}
           >
             <span
@@ -129,20 +187,19 @@ export function HeroSection() {
           </span>
         </motion.div>
 
-        {/* Title — stagger animated per word */}
-        <h1 className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-3xl sm:text-4xl md:text-[48px] font-extrabold text-white leading-tight tracking-tight">
-          {titleWords.map((word) => (
-            <motion.span
-              key={word}
-              variants={fadeUp}
-              style={{
-                textShadow: '0 0 40px rgba(59,130,246,0.15)',
-              }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
+        {/* Title */}
+        <motion.h1
+          className="mt-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight"
+          style={{
+            textShadow: '0 0 60px rgba(59,130,246,0.1)',
+          }}
+          variants={fadeUp}
+        >
+          <span className="block">Engineering</span>
+          <span className="block mt-1" style={{ color: '#60A5FA' }}>
+            Water Intelligence
+          </span>
+        </motion.h1>
 
         {/* Subtitle */}
         <motion.p
@@ -160,28 +217,33 @@ export function HeroSection() {
         >
           <motion.a
             href="#contact"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-xl text-white font-semibold text-sm transition-colors cursor-pointer"
-            style={{ backgroundColor: '#3B82F6' }}
+            className="group inline-flex items-center justify-center h-12 px-8 rounded-xl text-white font-semibold text-sm transition-all cursor-pointer"
+            style={{
+              backgroundColor: '#3B82F6',
+              boxShadow: '0 0 24px rgba(59,130,246,0.3), 0 4px 12px rgba(59,130,246,0.2)',
+            }}
             whileHover={{
               scale: 1.03,
-              backgroundColor: '#2563EB',
+              boxShadow: '0 0 32px rgba(59,130,246,0.4), 0 8px 20px rgba(59,130,246,0.25)',
             }}
             whileTap={{ scale: 0.97 }}
           >
             {t('cta1')}
+            <ArrowRight className="ms-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </motion.a>
 
           <motion.a
             href="#projects"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-xl font-semibold text-sm transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center h-12 px-8 rounded-xl font-semibold text-sm transition-all cursor-pointer"
             style={{
-              backgroundColor: 'transparent',
-              border: '1.5px solid #3B82F6',
-              color: '#3B82F6',
+              backgroundColor: 'rgba(59,130,246,0.05)',
+              border: '1.5px solid rgba(59,130,246,0.3)',
+              color: '#60A5FA',
             }}
             whileHover={{
               scale: 1.03,
               backgroundColor: 'rgba(59,130,246,0.1)',
+              borderColor: 'rgba(59,130,246,0.5)',
             }}
             whileTap={{ scale: 0.97 }}
           >
@@ -191,7 +253,7 @@ export function HeroSection() {
 
         {/* Stats Row */}
         <motion.div
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-14"
           initial="hidden"
           animate="visible"
         >
@@ -203,7 +265,7 @@ export function HeroSection() {
               variants={statVariants}
             >
               <span
-                className="text-3xl md:text-[36px] font-bold tracking-tight"
+                className="text-3xl md:text-4xl font-bold tracking-tight"
                 style={{
                   color: '#3B82F6',
                   fontFamily: 'var(--font-inter), Inter, sans-serif',
@@ -212,8 +274,8 @@ export function HeroSection() {
                 {ts(stat.valueKey)}
               </span>
               <span
-                className="mt-1 text-xs sm:text-sm"
-                style={{ color: '#94A3B8' }}
+                className="mt-1.5 text-xs sm:text-sm font-medium"
+                style={{ color: '#64748B' }}
               >
                 {ts(stat.labelKey)}
               </span>
@@ -227,24 +289,22 @@ export function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
+        transition={{ delay: 1.8, duration: 0.6 }}
       >
         <motion.a
           href="#services"
-          className="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer"
-          style={{
-            border: '1.5px solid rgba(59,130,246,0.3)',
-            color: '#60A5FA',
-          }}
-          animate={{ y: [0, 8, 0] }}
+          className="flex flex-col items-center gap-2 cursor-pointer"
+          animate={{ y: [0, 6, 0] }}
           transition={{
             duration: 2,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          whileHover={{ borderColor: 'rgba(59,130,246,0.6)' }}
         >
-          <ChevronDown className="w-5 h-5" />
+          <span className="text-[10px] uppercase tracking-[3px] font-medium" style={{ color: '#475569' }}>
+            Scroll
+          </span>
+          <ChevronDown className="w-4 h-4" style={{ color: '#475569' }} />
         </motion.a>
       </motion.div>
     </section>

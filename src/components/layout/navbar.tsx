@@ -12,16 +12,9 @@ import {
   Menu,
   ArrowRight,
   Languages,
+  X,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetClose,
-} from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 
 interface NavItem {
@@ -38,7 +31,6 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: 'contact', href: '#contact' },
 ]
 
-// Track whether we're mounted (client-side) without triggering the lint rule
 const emptySubscribe = () => () => {}
 function useIsMounted() {
   return useSyncExternalStore(emptySubscribe, () => true, () => false)
@@ -88,6 +80,7 @@ export function Navbar() {
       const top = el.getBoundingClientRect().top + window.scrollY - navHeight
       window.scrollTo({ top, behavior: 'smooth' })
     }
+    setMobileOpen(false)
   }
 
   const toggleLanguage = () => {
@@ -112,7 +105,9 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
         >
-          <Droplets className="h-7 w-7 text-primary" strokeWidth={2.2} />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+            <Droplets className="h-5 w-5 text-primary" strokeWidth={2.2} />
+          </div>
           <span className="text-lg font-bold tracking-tight text-foreground">
             Infeworks
           </span>
@@ -188,54 +183,87 @@ export function Navbar() {
             <ArrowRight className={cn('h-4 w-4', isRTL && 'rotate-180')} />
           </Button>
 
-          {/* Mobile Menu */}
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <button
-                type="button"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
-                aria-label="Open menu"
-              >
-                <Menu className="h-5 w-5" />
-              </button>
-            </SheetTrigger>
-            <SheetContent
-              side={isRTL ? 'right' : 'left'}
-              className="w-80 border-border/50 bg-background/95 backdrop-blur-xl"
-            >
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Droplets className="h-5 w-5 text-primary" />
-                  <span className="font-bold">Infeworks</span>
-                </SheetTitle>
-              </SheetHeader>
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
+            aria-label="Open menu"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
+      </nav>
 
-              <div className="flex flex-col gap-1 px-4 pt-4">
-                {NAV_ITEMS.map((item) => (
-                  <a
+      {/* Mobile Slide-in Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm md:hidden"
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.div
+              initial={{ x: isRTL ? 300 : -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: isRTL ? 300 : -300 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className={cn(
+                'fixed top-0 z-50 h-full w-80 bg-background border-border/50 shadow-2xl md:hidden',
+                isRTL ? 'right-0' : 'left-0'
+              )}
+            >
+              <div className="flex items-center justify-between p-4 border-b border-border/50">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+                    <Droplets className="h-5 w-5 text-primary" strokeWidth={2.2} />
+                  </div>
+                  <span className="font-bold text-foreground">Infeworks</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-1 p-4">
+                {NAV_ITEMS.map((item, idx) => (
+                  <motion.a
                     key={item.href}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * idx, duration: 0.3 }}
                     className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   >
                     {t(item.labelKey)}
-                  </a>
+                  </motion.a>
                 ))}
               </div>
 
-              <div className="mt-auto border-t border-border/50 p-4">
-                <SheetClose
+              <div className="absolute bottom-0 left-0 right-0 border-t border-border/50 p-4">
+                <button
+                  type="button"
                   className="flex w-full items-center justify-center gap-2 h-11 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/80"
                   onClick={scrollToContact}
                 >
                   {t('getStarted')}
                   <ArrowRight className={cn('h-4 w-4', isRTL && 'rotate-180')} />
-                </SheetClose>
+                </button>
               </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

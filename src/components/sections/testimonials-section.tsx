@@ -5,77 +5,67 @@ import { useTranslations, useLocale } from '@/lib/i18n-client'
 import { motion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
 
-// ── Types ──────────────────────────────────────────────────────────────
 interface Testimonial {
   id: string
-  quoteEn: string
+  quoteEn: string | null
   quoteAr: string
   authorName: string
   authorRoleEn: string
   authorRoleAr: string
-  organization: string
+  organization: string | null
   rating: number
+  projectType?: string | null
 }
 
-// ── Fallback data ──────────────────────────────────────────────────────
 const FALLBACK_TESTIMONIALS: Testimonial[] = [
   {
     id: '1',
-    quoteEn:
-      'We collaborated to build a collection tank and industrial sewage station inside the slaughterhouse. The team handled all requirements professionally and completed everything in record time, resolving all on-site challenges promptly.',
-    quoteAr:
-      'تم التعاون بيننا لانشاء خزان تجميع ومحطة صرف صناعي داخل المجزر وتم التعامل بحرفية مع جميع المتطلبات وانجازها فى اسرع وقت وحل جميع المشاكل التى واجهتنا اثناء سير العمل بالموقع',
-    authorName: 'Col. Nasser Fared Salem',
+    quoteEn: 'We collaborated on the construction of a collection tank and an industrial wastewater treatment station inside the slaughterhouse. The team handled all requirements with great professionalism and completed the work in the shortest possible time, resolving every challenge we faced during on-site execution.',
+    quoteAr: 'تم التعاون بيننا لانشاء خزان تجميع ومحطة صرف صناعي داخل المجزر وتم التعامل بحرفية مع جميع المتطلبات وانجازها فى اسرع وقت وحل جميع المشاكل التى واجهتنا اثناء سير العمل بالموقع',
+    authorName: 'Nasser Fared Salem',
     authorRoleEn: 'Manager, Automated Slaughterhouse',
     authorRoleAr: 'مدير مجزر آلي',
     organization: 'Shobra Shahab',
     rating: 5,
+    projectType: 'Industrial Wastewater',
   },
   {
     id: '2',
-    quoteEn:
-      'We worked on multiple projects involving excavation, backfilling, concrete works, and finishing for over 5 years. Work was completed on schedule with full financial commitment and zero delayed payments.',
-    quoteAr:
-      'تم العمل على عدة مشاريع تتضمن اعمال حفر وردم واحلال وخرسانات وبعض اعمال التشطيبات منذ اكثر من 5 اعوام وتم انجاز العمل على حسب الخطة الزمنية المقررة للمشروع مع الالتزام الكامل بالجانب المادي من طرف الشركة',
+    quoteEn: 'We have worked together on several projects involving excavation, backfilling, concrete works, and finishing over the past 5 years. The work was completed on schedule with full financial commitment and zero delayed payments.',
+    quoteAr: 'تم العمل على عدة مشاريع تتضمن اعمال حفر وردم واحلال وخرسانات وبعض اعمال التشطيبات منذ اكثر من 5 اعوام وتم انجاز العمل على حسب الخطة الزمنية المقررة للمشروع مع الالتزام الكامل بالجانب المادي من طرف الشركة',
     authorName: 'Hany Abbas',
     authorRoleEn: 'Contractor',
     authorRoleAr: 'مقاول',
-    organization: '',
+    organization: null,
     rating: 5,
+    projectType: 'Civil Construction',
   },
   {
     id: '3',
-    quoteEn:
-      'Infeworks was selected based on their expertise in sewage and water treatment. They executed sub-works without any contract breaches, delivering the highest quality on schedule and addressing all observations.',
-    quoteAr:
-      'تم اختيار الشركة الدولية للاعمال الهندسية للتعاون فى عدة مشاريع استنادا على خبراتها فى مجالات محطات الصرف الصحي والمياه وتم التنفيذ باعلى جودة وفى وقت مناسب طبقا لجدول المشروع',
+    quoteEn: 'Infeworks was selected based on their expertise in sewage and water treatment. They executed all sub-works without any contract breaches, delivering the highest quality on schedule and addressing all observations.',
+    quoteAr: 'تم اختيار الشركة الدولية للاعمال الهندسية للتعاون فى عدة مشاريع استنادا على خبراتها فى مجالات محطات الصرف الصحي والمياه وتم التنفيذ باعلى جودة وفى وقت مناسب طبقا لجدول المشروع',
     authorName: 'Eng. Naser Hafny',
     authorRoleEn: 'Consulting Engineer',
     authorRoleAr: 'مهندس استشاري',
-    organization: '',
+    organization: null,
     rating: 5,
+    projectType: 'Water & Sewage Treatment',
   },
 ]
 
-// ── Helpers ────────────────────────────────────────────────────────────
 function getInitials(name: string): string {
   return name
     .split(' ')
-    .filter((part) => !['Col.', 'Eng.', 'Dr.', 'Mr.', 'Mrs.'].includes(part))
+    .filter((part) => !['Col.', 'Eng.', 'Dr.', 'Mr.', 'Mrs.', 'م.'].includes(part))
     .map((w) => w[0])
     .join('')
     .toUpperCase()
     .slice(0, 2)
 }
 
-// ── Animation variants ─────────────────────────────────────────────────
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.12 } },
 }
 
 const cardVariants = {
@@ -83,40 +73,46 @@ const cardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
-// ── Component ──────────────────────────────────────────────────────────
+const easeOut = [0.22, 1, 0.36, 1] as const
+
 export function TestimonialsSection() {
   const t = useTranslations('testimonials')
+  const locale = useLocale()
   const [testimonials, setTestimonials] = useState<Testimonial[]>(FALLBACK_TESTIMONIALS)
 
-  const locale = useLocale()
-
-  // Fetch from API
   useEffect(() => {
     fetch('/api/testimonials')
       .then((res) => res.json())
       .then((data: Testimonial[]) => {
         if (Array.isArray(data) && data.length > 0) setTestimonials(data)
       })
-      .catch(() => {
-        // Use fallback
-      })
+      .catch(() => {})
   }, [])
 
   return (
-    <section id="testimonials" className="py-24" style={{ backgroundColor: '#0B1120' }}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* ── Header ─────────────────────────────────────────── */}
+    <section id="testimonials" className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: '#0B1120' }}>
+      {/* Background glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(59,130,246,0.04) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="mb-12 text-center md:mb-16">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 inline-block rounded-full border border-brand-border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-glow"
+            transition={{ duration: 0.5, ease: easeOut }}
+            className="mb-4 inline-block text-xs font-bold tracking-[3px] uppercase text-brand-glow"
           >
             {t('label')}
           </motion.span>
@@ -124,8 +120,8 @@ export function TestimonialsSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-4 text-3xl font-bold text-white sm:text-4xl"
+            transition={{ duration: 0.5, delay: 0.1, ease: easeOut }}
+            className="mb-4 text-3xl md:text-4xl font-bold text-white"
           >
             {t('title')}
           </motion.h2>
@@ -133,24 +129,32 @@ export function TestimonialsSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mx-auto mb-6 max-w-2xl text-base text-slate-400 sm:text-lg"
+            transition={{ duration: 0.5, delay: 0.2, ease: easeOut }}
+            className="mx-auto mb-8 max-w-2xl text-base text-slate-400"
           >
             {t('subtitle')}
           </motion.p>
-          <div className="mx-auto h-1 w-20 rounded-full bg-brand-accent" />
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.25, ease: easeOut }}
+            className="mx-auto h-[3px] w-12 rounded-full bg-brand-accent"
+          />
         </div>
 
-        {/* ── Cards ───────────────────────────────────────────── */}
+        {/* Cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
+          viewport={{ once: true, margin: '-60px' }}
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {testimonials.map((testimonial) => {
-            const quote = locale === 'ar' ? testimonial.quoteAr : testimonial.quoteEn
+            const quote = locale === 'ar'
+              ? testimonial.quoteAr
+              : (testimonial.quoteEn || testimonial.quoteAr)
             const role = locale === 'ar' ? testimonial.authorRoleAr : testimonial.authorRoleEn
             const initials = getInitials(testimonial.authorName)
 
@@ -158,11 +162,11 @@ export function TestimonialsSection() {
               <motion.div
                 key={testimonial.id}
                 variants={cardVariants}
-                className="group relative rounded-xl border border-brand-border bg-brand-surface p-6 transition-colors duration-300 hover:border-brand-accent/40"
+                className="group relative rounded-xl border border-brand-border bg-brand-surface p-6 transition-all duration-300 hover:border-brand-accent/30 hover:shadow-lg hover:shadow-brand-accent/5"
                 style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#3B82F6' }}
               >
                 {/* Quote icon */}
-                <Quote className="absolute top-6 end-6 h-8 w-8 text-brand-accent/20" />
+                <Quote className="absolute top-6 end-6 h-8 w-8 text-brand-accent/15" />
 
                 {/* Stars */}
                 <div className="mb-4 flex gap-0.5">
@@ -171,8 +175,8 @@ export function TestimonialsSection() {
                       key={i}
                       className={`h-4 w-4 ${
                         i < testimonial.rating
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'fill-none text-slate-600'
+                          ? 'fill-amber-400 text-amber-400'
+                          : 'fill-none text-slate-700'
                       }`}
                     />
                   ))}
@@ -180,7 +184,7 @@ export function TestimonialsSection() {
 
                 {/* Quote text */}
                 <p
-                  className="mb-6 min-h-[120px] text-base leading-relaxed text-slate-300 italic"
+                  className="mb-6 min-h-[100px] text-[15px] leading-relaxed text-slate-300 italic"
                   dir={locale === 'ar' ? 'rtl' : 'ltr'}
                 >
                   &ldquo;{quote}&rdquo;
@@ -188,8 +192,7 @@ export function TestimonialsSection() {
 
                 {/* Author */}
                 <div className="flex items-center gap-3 border-t border-brand-border pt-4">
-                  {/* Avatar with initials */}
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-accent/20 text-sm font-bold text-brand-accent">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-brand-accent" style={{ backgroundColor: 'rgba(59,130,246,0.12)' }}>
                     {initials}
                   </div>
                   <div className="min-w-0">

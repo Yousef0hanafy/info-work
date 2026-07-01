@@ -6,7 +6,6 @@ import ar from '@/messages/ar.json'
 
 type Locale = 'en' | 'ar'
 
-// ── Context ────────────────────────────────────────────────────────────
 interface I18nContextValue {
   locale: Locale
   setLocale: (l: Locale) => void
@@ -19,18 +18,15 @@ export const I18nContext = createContext<I18nContextValue>({
   dir: 'ltr',
 })
 
+function getInitialLocale(): Locale {
+  if (typeof window === 'undefined') return 'en'
+  const saved = localStorage.getItem('infeworks-locale') as Locale | null
+  return saved === 'ar' || saved === 'en' ? saved : 'en'
+}
+
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocaleState] = useState<Locale>('en')
+  const [locale, setLocaleState] = useState<Locale>(getInitialLocale)
 
-  // Persist locale in localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('infeworks-locale') as Locale | null
-    if (saved === 'ar' || saved === 'en') {
-      setLocaleState(saved)
-    }
-  }, [])
-
-  // Update <html> dir/lang when locale changes
   useEffect(() => {
     const html = document.documentElement
     html.setAttribute('lang', locale)
@@ -51,17 +47,14 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-// ── Hook: useLocale ────────────────────────────────────────────────────
 export function useLocale(): Locale {
   return useContext(I18nContext).locale
 }
 
-// ── Hook: useDir ───────────────────────────────────────────────────────
 export function useDir(): 'ltr' | 'rtl' {
   return useContext(I18nContext).dir
 }
 
-// ── Nested key resolver ───────────────────────────────────────────────
 function resolvePath(obj: unknown, path: string): unknown {
   const keys = path.split('.')
   let current: unknown = obj
@@ -80,25 +73,20 @@ function resolveNested(obj: unknown, path: string): string {
   return typeof result === 'string' ? result : path
 }
 
-// ── Hook: useTranslations ─────────────────────────────────────────────
 const messages: Record<Locale, Record<string, unknown>> = { en: en as never, ar: ar as never }
 
 export function useTranslations(namespace?: string) {
   const { locale } = useContext(I18nContext)
   const root = messages[locale]
-
-  // Resolve namespace (e.g. 'contact.form' => root.contact.form)
   const ns = namespace ? resolvePath(root, namespace) : root
 
   return (key: string, ...args: unknown[]) => {
     let val = resolveNested(ns, key)
 
-    // Positional interpolation: {0}, {1}, etc.
     args.forEach((arg, i) => {
       val = val.replace(`{${i}}`, String(arg))
     })
 
-    // Named interpolation from last arg if it's an object
     const lastArg = args[args.length - 1]
     if (args.length > 0 && typeof lastArg === 'object' && lastArg !== null) {
       const params = lastArg as Record<string, string>

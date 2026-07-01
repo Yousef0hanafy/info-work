@@ -4,8 +4,7 @@ import { useTranslations } from '@/lib/i18n-client'
 import { motion } from 'framer-motion'
 
 const badgeKeys = ['badge1', 'badge2', 'badge3'] as const
-
-const easeOut = [0.25, 0.46, 0.45, 0.94] as const
+const easeOut = [0.22, 1, 0.36, 1] as const
 
 export function ChairmanSection() {
   const t = useTranslations('chairman')
@@ -13,9 +12,17 @@ export function ChairmanSection() {
   return (
     <section
       id="about"
-      className="py-16 md:py-24"
+      className="py-20 md:py-28 relative overflow-hidden"
       style={{ backgroundColor: '#0B1120' }}
     >
+      {/* Subtle top divider line */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.15) 50%, transparent)',
+        }}
+      />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Label + Title */}
         <motion.div
@@ -40,7 +47,7 @@ export function ChairmanSection() {
           </motion.span>
 
           <motion.h2
-            className="mt-4 text-2xl md:text-[28px] font-bold text-white"
+            className="mt-4 text-3xl md:text-4xl font-bold text-white"
             variants={{
               hidden: { opacity: 0, y: 16 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
@@ -54,7 +61,7 @@ export function ChairmanSection() {
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-start">
           {/* Left column — Credibility Badges */}
           <motion.div
-            className="lg:col-span-2 relative flex flex-col gap-4 lg:pt-16"
+            className="lg:col-span-2 relative flex flex-col gap-4 lg:pt-12"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
@@ -64,8 +71,8 @@ export function ChairmanSection() {
             <span
               className="absolute -top-8 start-0 pointer-events-none select-none leading-none"
               style={{
-                fontSize: '120px',
-                color: 'rgba(59,130,246,0.30)',
+                fontSize: '140px',
+                color: 'rgba(59,130,246,0.15)',
                 fontFamily: 'Georgia, serif',
                 lineHeight: 1,
               }}
@@ -74,27 +81,29 @@ export function ChairmanSection() {
               &ldquo;
             </span>
 
-            {badgeKeys.map((key, i) => (
-              <motion.span
-                key={key}
-                className="inline-flex self-start rounded-full px-4 py-2 text-sm font-medium"
-                style={{
-                  backgroundColor: 'rgba(59,130,246,0.1)',
-                  color: '#60A5FA',
-                  border: '1px solid rgba(59,130,246,0.2)',
-                }}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  delay: 0.2 + i * 0.1,
-                  duration: 0.5,
-                  ease: easeOut,
-                }}
-              >
-                {t(key)}
-              </motion.span>
-            ))}
+            <div className="relative flex flex-col gap-3 pt-8">
+              {badgeKeys.map((key, i) => (
+                <motion.span
+                  key={key}
+                  className="inline-flex self-start rounded-lg px-4 py-2.5 text-sm font-medium"
+                  style={{
+                    backgroundColor: 'rgba(59,130,246,0.06)',
+                    color: '#60A5FA',
+                    border: '1px solid rgba(59,130,246,0.12)',
+                  }}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    delay: 0.2 + i * 0.1,
+                    duration: 0.5,
+                    ease: easeOut,
+                  }}
+                >
+                  {t(key)}
+                </motion.span>
+              ))}
+            </div>
           </motion.div>
 
           {/* Right column — Quote & Signature */}
@@ -105,28 +114,44 @@ export function ChairmanSection() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: easeOut }}
           >
-            {/* Quote — uses logical border-s (start) and ps (padding-start) for RTL support */}
+            {/* Quote */}
             <blockquote
-              className="border-s-[3px] ps-6 text-xl italic leading-relaxed"
+              className="border-s-[3px] ps-6 py-1"
               style={{
                 borderInlineStartColor: '#3B82F6',
-                color: '#CBD5E1',
               }}
             >
-              {t('quote')}
+              <p
+                className="text-xl md:text-2xl italic leading-relaxed"
+                style={{ color: '#CBD5E1' }}
+              >
+                {t('quote')}
+              </p>
             </blockquote>
 
             {/* Signature */}
-            <div className="mt-8">
-              <p className="text-white font-semibold text-lg">
-                {t('signature')}
-              </p>
-              <p
-                className="mt-1 text-sm"
-                style={{ color: '#94A3B8' }}
+            <div className="mt-8 flex items-center gap-4">
+              <div
+                className="flex items-center justify-center w-12 h-12 rounded-full text-lg font-bold"
+                style={{
+                  backgroundColor: 'rgba(59,130,246,0.1)',
+                  color: '#60A5FA',
+                  border: '1px solid rgba(59,130,246,0.2)',
+                }}
               >
-                {t('role')}
-              </p>
+                HD
+              </div>
+              <div>
+                <p className="text-white font-semibold text-lg">
+                  {t('signature')}
+                </p>
+                <p
+                  className="mt-0.5 text-sm font-medium"
+                  style={{ color: '#64748B' }}
+                >
+                  {t('role')}
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
